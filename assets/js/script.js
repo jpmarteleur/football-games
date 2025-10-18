@@ -194,25 +194,53 @@ function updateAttemptsDisplay() {
     document.getElementById('attempts').textContent = `${currentRow}/${maxAttempts}`;
 }
 
-// Handle game end
 function endGame(won) {
-    const messageEl = document.getElementById('message');
-    if (won) {
-        messageEl.textContent = `⚽🎉 GOAL! You guessed ${targetPlayer} in ${currentRow} ${currentRow === 1 ? 'attempt' : 'attempts'}! 🎉⚽`;
-        messageEl.className = 'message win';
-        messageEl.style.display = 'block';
-    } else {
-        messageEl.textContent = `😢 MISS! The player was ${targetPlayer}. Better luck next time!`;
-        messageEl.className = 'message lose';
-        messageEl.style.display = 'block';
-    }
+    gameOver = true;
     
-    document.getElementById('playAgain').classList.add('show');
+    // Show modal instead of inline message
+    showModal(won);
+    
+    // Keep the old message hidden
+    const messageEl = document.getElementById('message');
+    messageEl.style.display = 'none';
+    
+    // Hide the old play again button
+    document.getElementById('playAgain').classList.remove('show');
 }
 
-// Event listeners
+// Show modal popup
+function showModal(won) {
+    const modal = document.getElementById('gameModal');
+    const icon = document.getElementById('modalIcon');
+    const title = document.getElementById('modalTitle');
+    const message = document.getElementById('modalMessage');
+    
+    if (won) {
+        icon.textContent = '⚽🎉';
+        title.textContent = 'GOAL!';
+        title.className = 'modal-title win';
+        message.innerHTML = `You guessed <strong>${targetPlayer}</strong> in <strong>${currentRow}</strong> ${currentRow === 1 ? 'attempt' : 'attempts'}!<br><br>Amazing work! 🏆`;
+    } else {
+        icon.textContent = '😢⚽';
+        title.textContent = 'MISS!';
+        title.className = 'modal-title lose';
+        message.innerHTML = `The player was <strong>${targetPlayer}</strong><br><br>Better luck next time! Keep trying! 💪`;
+    }
+    
+    modal.classList.add('show');
+}
+
+// Close modal and restart game
+function closeModal() {
+    const modal = document.getElementById('gameModal');
+    modal.classList.remove('show');
+    initGame();
+}
+
+// Update event listeners at the bottom
 document.addEventListener('keydown', handleKeyPress);
 document.getElementById('playAgain').addEventListener('click', initGame);
+document.getElementById('modalButton').addEventListener('click', closeModal); // ADD THIS LINE
 
 // Start the game
 initGame();
