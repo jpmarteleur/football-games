@@ -1,0 +1,97 @@
+/* Welcome Container (Homepage specific) */
+.welcome-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-width: 1200px;
+    width: calc(100% - 40px);
+    border: 3px solid #ffd700;
+    position: relative;
+    margin: 30px auto;
+}
+
+.welcome-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ffd700, #ffffff, #ffd700);
+    border-radius: 16px;
+    z-index: -1;
+}
+
+.welcome-content {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.welcome-content p {
+    font-size: 1.2rem;
+    color: #2d5a3d;
+    margin-bottom: 2rem;
+}
+
+/* Game Cards Grid */
+.game-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.game-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: #2d5a3d;
+    border: 2px solid #1a472a;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: #ffd700;
+}
+
+.game-card h2 {
+    color: #1a472a;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.game-card p {
+    color: #4a4a4a;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.game-card .play-now,
+.game-card .status {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.game-card .play-now {
+    background: #1a472a;
+    color: white;
+}
+
+.game-card.coming-soon {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.game-card.coming-soon .status {
+    background: #ffd700;
+    color: #1a472a;
+}

@@ -237,10 +237,10 @@ function closeModal() {
     initGame();
 }
 
-// Update event listeners at the bottom
+// Event listeners
 document.addEventListener('keydown', handleKeyPress);
 document.getElementById('playAgain').addEventListener('click', initGame);
-document.getElementById('modalButton').addEventListener('click', closeModal); // ADD THIS LINE
+document.getElementById('modalButton').addEventListener('click', closeModal);
 
 // Start the game
 initGame();
