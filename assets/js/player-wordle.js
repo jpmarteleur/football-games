@@ -216,10 +216,11 @@ function showModal(won) {
     const message = document.getElementById('modalMessage');
     
     if (won) {
+        const attemptNumber = currentRow + 1;
         icon.textContent = '⚽🎉';
         title.textContent = 'GOAL!';
         title.className = 'modal-title win';
-        message.innerHTML = `You guessed <strong>${targetPlayer}</strong> in <strong>${currentRow}</strong> ${currentRow === 1 ? 'attempt' : 'attempts'}!<br><br>Amazing work! 🏆`;
+        message.innerHTML = `You guessed <strong>${targetPlayer}</strong> in <strong>${attemptNumber}</strong> ${attemptNumber === 1 ? 'attempt' : 'attempts'}!<br><br>Amazing work! 🏆`;
     } else {
         icon.textContent = '😢⚽';
         title.textContent = 'MISS!';
