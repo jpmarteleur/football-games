@@ -7,7 +7,16 @@ const playerPool = [
     'HAALAND',
     'SALAH',
     'BENZEMA',
-    'LEWANDOWSKI'
+    'LEWANDOWSKI',
+    'KANE',
+    'DEBRUYNE',
+    'MODRIC',
+    'VAN DIJK',
+    'SUAREZ',
+    'VALVERDE',
+    'FODEN',
+    'SANCHO',
+    'STERLING'
 ];
 
 let targetPlayer = '';
