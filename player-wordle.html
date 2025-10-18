@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Wordle - Football Games</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><a href="index.html" class="nav-logo-link">⚽ Football Games</a></div>
+            <ul class="nav-menu">
+                <li class="nav-item active"><a href="player-wordle.html" class="nav-link">Player Wordle</a></li>
+                <li class="nav-item"><a href="club-guesser.html" class="nav-link">Club Guesser</a></li>
+                <li class="nav-item"><a href="true-false.html" class="nav-link">True or False</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main-content">
+        <div class="container">
+            <div class="soccer-icon">⚽</div>
+        <h1>PLAYER WORDLE</h1>
+        <p class="subtitle">🏆 Guess the player's name! 🏆</p>
+        
+        <div class="game-info">
+            <p>ATTEMPTS: <span class="attempts" id="attempts">0/6</span></p>
+            <p class="target-length">Target length: <span id="targetLength"></span> letters</p>
+        </div>
+
+        <div class="guesses-container" id="guessesContainer"></div>
+
+        <div class="input-section">
+            <input 
+                type="text" 
+                id="playerGuess" 
+                placeholder="Enter player name..."
+                maxlength="15"
+            >
+            <button id="submitGuess">⚽ Shoot</button>
+        </div>
+
+        <div class="message" id="message"></div>
+        <button class="play-again" id="playAgain">🔄 Play Again</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
