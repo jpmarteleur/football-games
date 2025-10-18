@@ -200,9 +200,11 @@ function endGame(won) {
     if (won) {
         messageEl.textContent = `⚽🎉 GOAL! You guessed ${targetPlayer} in ${currentRow} ${currentRow === 1 ? 'attempt' : 'attempts'}! 🎉⚽`;
         messageEl.className = 'message win';
+        messageEl.style.display = 'block';
     } else {
         messageEl.textContent = `😢 MISS! The player was ${targetPlayer}. Better luck next time!`;
         messageEl.className = 'message lose';
+        messageEl.style.display = 'block';
     }
     
     document.getElementById('playAgain').classList.add('show');
