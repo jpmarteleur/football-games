@@ -192,9 +192,9 @@ body::before {
 .container {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
-    padding: 25px;
+    padding: 15px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    max-width: 450px;
+    max-width: 650px;
     width: calc(100% - 40px); /* Account for padding */
     border: 3px solid #ffd700;
     position: relative;
@@ -267,22 +267,7 @@ h1 {
     color: #a8d5a8;
 }
 
-.guesses-container {
-    margin-bottom: 20px; /* Reduced from 25px */
-    min-height: auto; /* Changed from 220px - no minimum height */
-    background: rgba(26, 71, 42, 0.05);
-    padding: 12px; /* Reduced from 15px */
-    border-radius: 10px; /* Reduced from 12px */
-    /* NO max-height or overflow - let it grow naturally */
-}
 
-.guess-row {
-    display: flex;
-    gap: 6px; /* Reduced from 8px */
-    margin-bottom: 10px; /* Reduced from 12px */
-    justify-content: center;
-    animation: slideIn 0.3s ease-out;
-}
 
 @keyframes slideIn {
     from {
@@ -293,70 +278,6 @@ h1 {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.letter-box {
-    width: 42px; /* Reduced from 55px */
-    height: 42px; /* Reduced from 55px */
-    border: 2px solid #2d5a3d; /* Reduced from 3px */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3em; /* Reduced from 1.6em */
-    font-weight: 900;
-    text-transform: uppercase;
-    border-radius: 8px; /* Reduced from 10px */
-    transition: all 0.4s ease;
-    background: white;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.letter-box.correct {
-    background: linear-gradient(135deg, #2d8f3d 0%, #1a6b2a 100%);
-    color: white;
-    border-color: #1a6b2a;
-    transform: scale(1.05);
-    box-shadow: 0 5px 20px rgba(29, 143, 61, 0.5);
-}
-
-.letter-box.present {
-    background: linear-gradient(135deg, #ffd700 0%, #f0a500 100%);
-    color: #1a472a;
-    border-color: #f0a500;
-    transform: scale(1.05);
-    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
-}
-
-.letter-box.absent {
-    background: linear-gradient(135deg, #5a5a5a 0%, #3d3d3d 100%);
-    color: white;
-    border-color: #3d3d3d;
-    opacity: 0.7;
-}
-
-.input-section {
-    display: flex;
-    gap: 8px; /* Reduced from 10px */
-    margin-bottom: 15px; /* Reduced from 20px */
-}
-
-#playerGuess {
-    flex: 1;
-    padding: 14px; /* Reduced from 18px */
-    font-size: 1em; /* Reduced from 1.2em */
-    border: 2px solid #2d5a3d; /* Reduced from 3px */
-    border-radius: 10px; /* Reduced from 12px */
-    text-transform: uppercase;
-    font-weight: 700;
-    background: rgba(255, 255, 255, 0.9);
-    transition: all 0.3s ease;
-}
-
-#playerGuess:focus {
-    outline: none;
-    border-color: #ffd700;
-    background: white;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }
 
 button {
@@ -438,4 +359,96 @@ button:disabled {
     height: 100px;
     opacity: 0.1;
     pointer-events: none;
+}
+/* Wordle Grid Styles */
+.game-board {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.board-row {
+    display: flex;
+    gap: 5px;
+}
+
+.tile {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #2d5a3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8em;
+    font-weight: 900;
+    text-transform: uppercase;
+    border-radius: 4px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.tile.current {
+    border-color: #ffd700;
+    border-width: 3px;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.tile.flip {
+    animation: flip 0.5s ease;
+}
+
+@keyframes flip {
+    0% {
+        transform: rotateX(0);
+    }
+    50% {
+        transform: rotateX(90deg);
+    }
+    100% {
+        transform: rotateX(0);
+    }
+}
+
+.tile.correct {
+    background: linear-gradient(135deg, #2d8f3d 0%, #1a6b2a 100%);
+    color: white;
+    border-color: #1a6b2a;
+}
+
+.tile.present {
+    background: linear-gradient(135deg, #ffd700 0%, #f0a500 100%);
+    color: #1a472a;
+    border-color: #f0a500;
+}
+
+.tile.absent {
+    background: linear-gradient(135deg, #5a5a5a 0%, #3d3d3d 100%);
+    color: white;
+    border-color: #3d3d3d;
+}
+
+.keyboard-info {
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(26, 71, 42, 0.1);
+    border-radius: 8px;
+}
+
+.keyboard-info p {
+    font-size: 0.85em;
+    color: #2d5a3d;
+    font-weight: 600;
+    margin: 0;
 }

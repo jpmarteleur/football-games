@@ -1,4 +1,3 @@
-
 // Pool of famous soccer players
 const playerPool = [
     'MESSI',
@@ -12,54 +11,156 @@ const playerPool = [
 ];
 
 let targetPlayer = '';
-let attempts = 0;
+let currentRow = 0;
+let currentTile = 0;
 const maxAttempts = 6;
 let gameOver = false;
+let guesses = [];
 
 // Initialize game
 function initGame() {
     targetPlayer = playerPool[Math.floor(Math.random() * playerPool.length)];
-    attempts = 0;
+    currentRow = 0;
+    currentTile = 0;
     gameOver = false;
+    guesses = Array(maxAttempts).fill('').map(() => Array(targetPlayer.length).fill(''));
     
-    document.getElementById('guessesContainer').innerHTML = '';
-    document.getElementById('playerGuess').value = '';
-    document.getElementById('playerGuess').disabled = false;
-    document.getElementById('submitGuess').disabled = false;
     document.getElementById('message').className = 'message';
     document.getElementById('message').style.display = 'none';
     document.getElementById('playAgain').classList.remove('show');
     document.getElementById('targetLength').textContent = targetPlayer.length;
     updateAttemptsDisplay();
     
+    createBoard();
+    
     console.log('Target player:', targetPlayer); // For testing - remove in production
 }
 
-// Compare guess with target and return status for each letter
-function checkGuess(guess, target) {
-    guess = guess.toUpperCase();
-    const result = [];
-    const targetLetters = target.split('');
-    const guessLetters = guess.split('');
+// Create the game board grid
+function createBoard() {
+    const board = document.getElementById('gameBoard');
+    board.innerHTML = '';
     
-    // Track which target letters have been matched
-    const targetUsed = new Array(target.length).fill(false);
-    const guessStatus = new Array(guess.length).fill('absent');
+    for (let row = 0; row < maxAttempts; row++) {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'board-row';
+        rowDiv.id = `row-${row}`;
+        
+        for (let col = 0; col < targetPlayer.length; col++) {
+            const tile = document.createElement('div');
+            tile.className = 'tile';
+            tile.id = `tile-${row}-${col}`;
+            rowDiv.appendChild(tile);
+        }
+        
+        board.appendChild(rowDiv);
+    }
+}
+
+// Update tile display
+function updateBoard() {
+    for (let row = 0; row < maxAttempts; row++) {
+        for (let col = 0; col < targetPlayer.length; col++) {
+            const tile = document.getElementById(`tile-${row}-${col}`);
+            tile.textContent = guesses[row][col];
+            
+            // Highlight current tile
+            if (row === currentRow && col === currentTile && !gameOver) {
+                tile.classList.add('current');
+            } else {
+                tile.classList.remove('current');
+            }
+        }
+    }
+}
+
+// Handle keyboard input
+function handleKeyPress(e) {
+    if (gameOver) return;
+    
+    const key = e.key.toUpperCase();
+    
+    if (key === 'ENTER') {
+        submitGuess();
+    } else if (key === 'BACKSPACE') {
+        deleteLetter();
+    } else if (key.length === 1 && key >= 'A' && key <= 'Z') {
+        addLetter(key);
+    }
+}
+
+// Add letter to current tile
+function addLetter(letter) {
+    if (currentTile < targetPlayer.length) {
+        guesses[currentRow][currentTile] = letter;
+        currentTile++;
+        updateBoard();
+    }
+}
+
+// Delete letter from current tile
+function deleteLetter() {
+    if (currentTile > 0) {
+        currentTile--;
+        guesses[currentRow][currentTile] = '';
+        updateBoard();
+    }
+}
+
+// Submit current guess
+function submitGuess() {
+    // Check if row is complete
+    if (currentTile !== targetPlayer.length) {
+        alert(`⚽ Please enter all ${targetPlayer.length} letters!`);
+        return;
+    }
+    
+    const guess = guesses[currentRow].join('');
+    
+    // Check guess and color tiles
+    colorTiles(currentRow, guess);
+    
+    // Check win condition
+    if (guess === targetPlayer) {
+        gameOver = true;
+        setTimeout(() => endGame(true), 500);
+        return;
+    }
+    
+    // Move to next row
+    currentRow++;
+    currentTile = 0;
+    updateAttemptsDisplay();
+    updateBoard();
+    
+    // Check lose condition
+    if (currentRow >= maxAttempts) {
+        gameOver = true;
+        setTimeout(() => endGame(false), 500);
+    }
+}
+
+// Color tiles based on guess
+function colorTiles(row, guess) {
+    const targetLetters = targetPlayer.split('');
+    const guessLetters = guess.split('');
+    const targetUsed = new Array(targetPlayer.length).fill(false);
+    const tileStatuses = new Array(targetPlayer.length).fill('absent');
     
     // First pass: mark correct positions (green)
     for (let i = 0; i < guessLetters.length; i++) {
         if (guessLetters[i] === targetLetters[i]) {
-            guessStatus[i] = 'correct';
+            tileStatuses[i] = 'correct';
             targetUsed[i] = true;
         }
     }
     
     // Second pass: mark present letters (yellow)
     for (let i = 0; i < guessLetters.length; i++) {
-        if (guessStatus[i] === 'absent') {
+        if (tileStatuses[i] === 'absent') {
             for (let j = 0; j < targetLetters.length; j++) {
                 if (!targetUsed[j] && guessLetters[i] === targetLetters[j]) {
-                    guessStatus[i] = 'present';
+                    tileStatuses[i] = 'present';
                     targetUsed[j] = true;
                     break;
                 }
@@ -67,46 +168,28 @@ function checkGuess(guess, target) {
         }
     }
     
-    // Build result array
-    for (let i = 0; i < guessLetters.length; i++) {
-        result.push({
-            letter: guessLetters[i],
-            status: guessStatus[i]
-        });
-    }
-    
-    return result;
-}
-
-// Display guess with colored boxes
-function displayGuess(guessResult) {
-    const guessRow = document.createElement('div');
-    guessRow.className = 'guess-row';
-    
-    guessResult.forEach(item => {
-        const box = document.createElement('div');
-        box.className = `letter-box ${item.status}`;
-        box.textContent = item.letter;
-        guessRow.appendChild(box);
+    // Apply colors with animation delay
+    tileStatuses.forEach((status, i) => {
+        const tile = document.getElementById(`tile-${row}-${i}`);
+        setTimeout(() => {
+            tile.classList.add('flip');
+            setTimeout(() => {
+                tile.classList.add(status);
+            }, 250);
+        }, i * 100);
     });
-    
-    document.getElementById('guessesContainer').appendChild(guessRow);
 }
 
 // Update attempts display
 function updateAttemptsDisplay() {
-    document.getElementById('attempts').textContent = `${attempts}/${maxAttempts}`;
+    document.getElementById('attempts').textContent = `${currentRow}/${maxAttempts}`;
 }
 
 // Handle game end
 function endGame(won) {
-    gameOver = true;
-    document.getElementById('playerGuess').disabled = true;
-    document.getElementById('submitGuess').disabled = true;
-    
     const messageEl = document.getElementById('message');
     if (won) {
-        messageEl.textContent = `⚽🎉 GOAL! You guessed ${targetPlayer} in ${attempts} ${attempts === 1 ? 'attempt' : 'attempts'}! 🎉⚽`;
+        messageEl.textContent = `⚽🎉 GOAL! You guessed ${targetPlayer} in ${currentRow} ${currentRow === 1 ? 'attempt' : 'attempts'}! 🎉⚽`;
         messageEl.className = 'message win';
     } else {
         messageEl.textContent = `😢 MISS! The player was ${targetPlayer}. Better luck next time!`;
@@ -116,54 +199,8 @@ function endGame(won) {
     document.getElementById('playAgain').classList.add('show');
 }
 
-// Handle guess submission
-function handleGuess() {
-    if (gameOver) return;
-    
-    const guess = document.getElementById('playerGuess').value.trim().toUpperCase();
-    
-    // Validate input
-    if (!guess) {
-        alert('⚽ Please enter a player name!');
-        return;
-    }
-    
-    if (guess.length !== targetPlayer.length) {
-        alert(`⚽ Player name must be ${targetPlayer.length} letters long!`);
-        return;
-    }
-    
-    // Check guess
-    const result = checkGuess(guess, targetPlayer);
-    displayGuess(result);
-    attempts++;
-    updateAttemptsDisplay();
-    
-    // Clear input
-    document.getElementById('playerGuess').value = '';
-    
-    // Check win condition
-    if (guess === targetPlayer) {
-        endGame(true);
-        return;
-    }
-    
-    // Check lose condition
-    if (attempts >= maxAttempts) {
-        endGame(false);
-        return;
-    }
-}
-
 // Event listeners
-document.getElementById('submitGuess').addEventListener('click', handleGuess);
-
-document.getElementById('playerGuess').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        handleGuess();
-    }
-});
-
+document.addEventListener('keydown', handleKeyPress);
 document.getElementById('playAgain').addEventListener('click', initGame);
 
 // Start the game
