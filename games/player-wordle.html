@@ -39,6 +39,28 @@
             <div class="modal-icon" id="modalIcon"></div>
             <h2 class="modal-title" id="modalTitle"></h2>
             <p class="modal-message" id="modalMessage"></p>
+            
+            <!-- Stats Dashboard Template -->
+            <div class="modal-stats" id="modalStats">
+                <h3 class="stats-title">📊 Your Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="statWinRate">0%</div>
+                        <div class="stat-label">Win Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statCurrentStreak">0</div>
+                        <div class="stat-label">Current Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statLongestStreak">0</div>
+                        <div class="stat-label">Longest Streak</div>
+                    </div>
+                </div>
+                <div class="stats-footer" id="statsFooter">
+                    Games Played: <span id="statGamesPlayed">0</span> | Games Won: <span id="statGamesWon">0</span>
+                </div>
+            </div>
             <button class="modal-button" id="modalButton">Play Again</button>
         </div>
     </div>

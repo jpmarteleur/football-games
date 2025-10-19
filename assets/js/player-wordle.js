@@ -13,10 +13,7 @@ const playerPool = [
     'MODRIC',
     'VAN DIJK',
     'SUAREZ',
-    'VALVERDE',
-    'FODEN',
-    'SANCHO',
-    'STERLING'
+    'VALVERDE'
 ];
 
 let targetPlayer = '';
@@ -25,6 +22,52 @@ let currentTile = 0;
 const maxAttempts = 6;
 let gameOver = false;
 let guesses = [];
+
+// Statistics Management Functions
+function loadStats() {
+    const savedStats = localStorage.getItem('wordleStats');
+    if (savedStats) {
+        return JSON.parse(savedStats);
+    }
+    // Default stats if none exist
+    return {
+        gamesPlayed: 0,
+        gamesWon: 0,
+        currentStreak: 0,
+        longestStreak: 0
+    };
+}
+
+function saveStats(stats) {
+    localStorage.setItem('wordleStats', JSON.stringify(stats));
+}
+
+function updateStats(won) {
+    const stats = loadStats();
+    
+    stats.gamesPlayed++;
+    
+    if (won) {
+        stats.gamesWon++;
+        stats.currentStreak++;
+        
+        // Update longest streak if current is higher
+        if (stats.currentStreak > stats.longestStreak) {
+            stats.longestStreak = stats.currentStreak;
+        }
+    } else {
+        // Lost the game, reset current streak
+        stats.currentStreak = 0;
+    }
+    
+    saveStats(stats);
+    return stats;
+}
+
+function getWinRate(stats) {
+    if (stats.gamesPlayed === 0) return 0;
+    return Math.round((stats.gamesWon / stats.gamesPlayed) * 100);
+}
 
 // Initialize game
 function initGame() {
@@ -215,6 +258,13 @@ function showModal(won) {
     const title = document.getElementById('modalTitle');
     const message = document.getElementById('modalMessage');
     
+    // Update and get stats
+    const stats = updateStats(won);
+    const winRate = getWinRate(stats);
+    
+    // Update stats display
+    updateStatsDisplay(stats, winRate, won);
+    
     if (won) {
         const attemptNumber = currentRow + 1;
         icon.textContent = '⚽🎉';
@@ -229,6 +279,32 @@ function showModal(won) {
     }
     
     modal.classList.add('show');
+}
+
+function updateStatsDisplay(stats, winRate, won) {
+    // Update the numbers
+    document.getElementById('statWinRate').textContent = `${winRate}%`;
+    document.getElementById('statCurrentStreak').textContent = stats.currentStreak;
+    document.getElementById('statLongestStreak').textContent = stats.longestStreak;
+    document.getElementById('statGamesPlayed').textContent = stats.gamesPlayed;
+    document.getElementById('statGamesWon').textContent = stats.gamesWon;
+    
+    // Update colors based on win/lose
+    const modalStats = document.getElementById('modalStats');
+    const winRateValue = document.getElementById('statWinRate');
+    const currentStreakValue = document.getElementById('statCurrentStreak');
+    const longestStreakValue = document.getElementById('statLongestStreak');
+    
+    // Reset classes
+    modalStats.classList.remove('lose-bg');
+    winRateValue.classList.remove('lose-color');
+    currentStreakValue.className = 'stat-value current-streak';
+    longestStreakValue.className = 'stat-value longest-streak';
+    
+    if (!won) {
+        modalStats.classList.add('lose-bg');
+        winRateValue.classList.add('lose-color');
+    }
 }
 
 // Close modal and restart game
