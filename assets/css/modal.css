@@ -115,8 +115,8 @@
 }
 
 .modal-button {
-    padding: 15px 40px;
-    font-size: 1.2em;
+    padding: 12px 32px;
+    font-size: 1.05em;
     background: linear-gradient(135deg, #ffd700 0%, #f0a500 100%);
     color: #1a472a;
     border: none;
@@ -126,6 +126,8 @@
     transition: all 0.3s ease;
     box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
     text-transform: uppercase;
+    margin-top: 25px;
+    border-top: 2px solid rgba(0, 0, 0, 0.05);
 }
 
 .modal-button:hover {
@@ -219,4 +221,34 @@
     .stat-label {
         font-size: 0.75em;
     }
+}
+/* Close Button */
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #dc3545;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    padding: 0;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    background: rgba(220, 53, 69, 0.15);
+    color: #c82333;
+    transform: scale(1.1);
+}
+
+.modal-close:active {
+    transform: scale(0.95);
 }

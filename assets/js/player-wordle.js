@@ -11,7 +11,6 @@ const playerPool = [
     'KANE',
     'DEBRUYNE',
     'MODRIC',
-    'VAN DIJK',
     'SUAREZ',
     'VALVERDE'
 ];
@@ -313,11 +312,17 @@ function closeModal() {
     modal.classList.remove('show');
     initGame();
 }
+// Close modal without restarting game
+function closeModalOnly() {
+    const modal = document.getElementById('gameModal');
+    modal.classList.remove('show');
+}
 
 // Event listeners
 document.addEventListener('keydown', handleKeyPress);
 document.getElementById('playAgain').addEventListener('click', initGame);
 document.getElementById('modalButton').addEventListener('click', closeModal);
+document.getElementById('modalClose').addEventListener('click', closeModalOnly);
 
 // Start the game
 initGame();
