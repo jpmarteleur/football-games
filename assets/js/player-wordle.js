@@ -12,7 +12,20 @@ const playerPool = [
     'DEBRUYNE',
     'MODRIC',
     'SUAREZ',
-    'VALVERDE'
+    'VALVERDE',
+    'ARAUJO',
+    'UGARTE',
+    'FATI',
+    'PEDRI',
+    'BENTANCUR',
+    'VERRATTI',
+    'KIMMICH',
+    'GREALISH',
+    'YAMAL',
+    'RASHFORD',
+    'NUNEZ',
+    'BELLINGHAM',
+    'MASTANTUONO'
 ];
 
 let targetPlayer = '';
