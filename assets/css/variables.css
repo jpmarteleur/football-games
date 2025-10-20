@@ -1,0 +1,19 @@
+/* CSS Variables - Colors and Spacing */
+:root {
+  /* Colors */
+  --color-primary: #2d8f3d;
+  --color-primary-dark: #1a6b2a;
+  --color-accent: #ffd700;
+  --color-accent-dark: #f0a500;
+  
+  /* Spacing */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+}

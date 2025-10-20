@@ -1,32 +1,20 @@
+// Use shared stats functions
+const STATS_KEY = 'wordleStats';
 // Pool of famous soccer players
-const playerPool = [
-    'MESSI',
-    'RONALDO',
-    'NEYMAR',
-    'MBAPPE',
-    'HAALAND',
-    'SALAH',
-    'BENZEMA',
-    'LEWANDOWSKI',
-    'KANE',
-    'DEBRUYNE',
-    'MODRIC',
-    'SUAREZ',
-    'VALVERDE',
-    'ARAUJO',
-    'UGARTE',
-    'FATI',
-    'PEDRI',
-    'BENTANCUR',
-    'VERRATTI',
-    'KIMMICH',
-    'GREALISH',
-    'YAMAL',
-    'RASHFORD',
-    'NUNEZ',
-    'BELLINGHAM',
-    'MASTANTUONO'
-];
+let playerPool = [];
+
+// Load players from JSON
+fetch('../assets/data/players.json')
+    .then(response => response.json())
+    .then(data => {
+        playerPool = data.players;
+        console.log('Players loaded:', playerPool.length);
+    })
+    .catch(error => {
+        console.error('Error loading players:', error);
+        // Fallback if JSON doesn't load
+        playerPool = ['MESSI'];
+    });
 
 let targetPlayer = '';
 let currentRow = 0;
@@ -35,54 +23,12 @@ const maxAttempts = 6;
 let gameOver = false;
 let guesses = [];
 
-// Statistics Management Functions
-function loadStats() {
-    const savedStats = localStorage.getItem('wordleStats');
-    if (savedStats) {
-        return JSON.parse(savedStats);
-    }
-    // Default stats if none exist
-    return {
-        gamesPlayed: 0,
-        gamesWon: 0,
-        currentStreak: 0,
-        longestStreak: 0
-    };
-}
-
-function saveStats(stats) {
-    localStorage.setItem('wordleStats', JSON.stringify(stats));
-}
-
-function updateStats(won) {
-    const stats = loadStats();
-    
-    stats.gamesPlayed++;
-    
-    if (won) {
-        stats.gamesWon++;
-        stats.currentStreak++;
-        
-        // Update longest streak if current is higher
-        if (stats.currentStreak > stats.longestStreak) {
-            stats.longestStreak = stats.currentStreak;
-        }
-    } else {
-        // Lost the game, reset current streak
-        stats.currentStreak = 0;
-    }
-    
-    saveStats(stats);
-    return stats;
-}
-
-function getWinRate(stats) {
-    if (stats.gamesPlayed === 0) return 0;
-    return Math.round((stats.gamesWon / stats.gamesPlayed) * 100);
-}
-
 // Initialize game
 function initGame() {
+    if (playerPool.length === 0) {
+        setTimeout(initGame, 100);
+        return;
+    }
     targetPlayer = playerPool[Math.floor(Math.random() * playerPool.length)];
     currentRow = 0;
     currentTile = 0;
@@ -271,7 +217,7 @@ function showModal(won) {
     const message = document.getElementById('modalMessage');
     
     // Update and get stats
-    const stats = updateStats(won);
+    const stats = updateStats(STATS_KEY, won);
     const winRate = getWinRate(stats);
     
     // Update stats display
