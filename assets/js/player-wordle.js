@@ -2,20 +2,43 @@
 const STATS_KEY = 'wordleStats';
 // Pool of famous soccer players
 let playerPool = [];
+let isLoadingPlayers = true;
 
-// Load players from JSON
-fetch('../assets/data/players.json')
-    .then(response => response.json())
-    .then(data => {
-        playerPool = data.players;
-        console.log('Players loaded:', playerPool.length);
-    })
-    .catch(error => {
-        console.error('Error loading players:', error);
-        // Fallback if JSON doesn't load
-        playerPool = ['MESSI'];
-    });
+// Load players from API (with fallback to JSON)
+async function loadPlayers() {
+    try {
+        console.log('🔄 Loading players...');
+        
+        // Try to get players from API/cache, fallback to JSON if fails
+        playerPool = await PlayerDataManager.getPlayersWithFallback();
+        
+        console.log(`✅ Loaded ${playerPool.length} players`);
+        isLoadingPlayers = false;
+        
+        // Start the game once players are loaded
+        initGame();
+        
+    } catch (error) {
+        console.error('❌ Error loading players:', error);
+        
+        // Emergency fallback - load from JSON
+        try {
+            const response = await fetch('../assets/data/players.json');
+            const data = await response.json();
+            playerPool = data.players;
+            console.log('📄 Using fallback JSON file');
+        } catch (jsonError) {
+            console.error('❌ Fallback also failed:', jsonError);
+            playerPool = ['MESSI', 'RONALDO', 'NEYMAR', 'HAALAND', 'MBAPPE'];
+        }
+        
+        isLoadingPlayers = false;
+        initGame();
+    }
+}
 
+// Start loading players immediately
+loadPlayers();
 let targetPlayer = '';
 let currentRow = 0;
 let currentTile = 0;
@@ -25,7 +48,9 @@ let guesses = [];
 
 // Initialize game
 function initGame() {
-    if (playerPool.length === 0) {
+    // Wait for players to load
+    if (isLoadingPlayers || playerPool.length === 0) {
+        console.log('⏳ Waiting for players to load...');
         setTimeout(initGame, 100);
         return;
     }
@@ -283,5 +308,3 @@ document.getElementById('playAgain').addEventListener('click', initGame);
 document.getElementById('modalButton').addEventListener('click', closeModal);
 document.getElementById('modalClose').addEventListener('click', closeModalOnly);
 
-// Start the game
-initGame();
