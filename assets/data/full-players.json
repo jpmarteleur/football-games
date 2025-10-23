@@ -1,0 +1,601 @@
+{
+  "version": "3.0",
+  "lastUpdated": "2025-10-23T00:18:13.253Z",
+  "totalPlayers": 66,
+  "players": [
+    {
+      "id": 22090,
+      "lastName": "SALIBA",
+      "age": 24,
+      "nationality": "France",
+      "photo": "https://media.api-sports.io/football/players/22090.png",
+      "team": "Arsenal",
+      "position": "Defender"
+    },
+    {
+      "id": 22224,
+      "lastName": "MAGALHES",
+      "age": 28,
+      "nationality": "Brazil",
+      "photo": "https://media.api-sports.io/football/players/22224.png",
+      "team": "Arsenal",
+      "position": "Defender"
+    },
+    {
+      "id": 19959,
+      "lastName": "WHITE",
+      "age": 28,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/19959.png",
+      "team": "Arsenal",
+      "position": "Defender"
+    },
+    {
+      "id": 290,
+      "lastName": "DIJK",
+      "age": 34,
+      "nationality": "Netherlands",
+      "photo": "https://media.api-sports.io/football/players/290.png",
+      "team": "Liverpool",
+      "position": "Defender"
+    },
+    {
+      "id": 756,
+      "lastName": "VALVERDE",
+      "age": 27,
+      "nationality": "Uruguay",
+      "photo": "https://media.api-sports.io/football/players/756.png",
+      "team": "Real Madrid",
+      "position": "Midfielder"
+    },
+    {
+      "id": 2937,
+      "lastName": "RICE",
+      "age": 26,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/2937.png",
+      "team": "Arsenal",
+      "position": "Midfielder"
+    },
+    {
+      "id": 5,
+      "lastName": "AKANJI",
+      "age": 30,
+      "nationality": "Switzerland",
+      "photo": "https://media.api-sports.io/football/players/5.png",
+      "team": "Man City",
+      "position": "Defender"
+    },
+    {
+      "id": 567,
+      "lastName": "DIAS",
+      "age": 28,
+      "nationality": "Portugal",
+      "photo": "https://media.api-sports.io/football/players/567.png",
+      "team": "Man City",
+      "position": "Defender"
+    },
+    {
+      "id": 627,
+      "lastName": "WALKER",
+      "age": 35,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/627.png",
+      "team": "Man City",
+      "position": "Defender"
+    },
+    {
+      "id": 1145,
+      "lastName": "KONAT",
+      "age": 26,
+      "nationality": "France",
+      "photo": "https://media.api-sports.io/football/players/1145.png",
+      "team": "Liverpool",
+      "position": "Defender"
+    },
+    {
+      "id": 22221,
+      "lastName": "MAIGNAN",
+      "age": 30,
+      "nationality": "France",
+      "photo": "https://media.api-sports.io/football/players/22221.png",
+      "team": "AC Milan",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 129033,
+      "lastName": "GVARDIOL",
+      "age": 23,
+      "nationality": "Croatia",
+      "photo": "https://media.api-sports.io/football/players/129033.png",
+      "team": "Man City",
+      "position": "Defender"
+    },
+    {
+      "id": 278,
+      "lastName": "MBAPP",
+      "age": 27,
+      "nationality": "France",
+      "photo": "https://media.api-sports.io/football/players/278.png",
+      "team": "PSG",
+      "position": "Attacker"
+    },
+    {
+      "id": 2207,
+      "lastName": "CAMAVINGA",
+      "age": 23,
+      "nationality": "France",
+      "photo": "https://media.api-sports.io/football/players/2207.png",
+      "team": "Real Madrid",
+      "position": "Midfielder"
+    },
+    {
+      "id": 386828,
+      "lastName": "YAMAL",
+      "age": 18,
+      "nationality": "Spain",
+      "photo": "https://media.api-sports.io/football/players/386828.png",
+      "team": "Barcelona",
+      "position": "Attacker"
+    },
+    {
+      "id": 19465,
+      "lastName": "RAYA",
+      "age": 30,
+      "nationality": "Spain",
+      "photo": "https://media.api-sports.io/football/players/19465.png",
+      "team": "Arsenal",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 31009,
+      "lastName": "BASTONI",
+      "age": 26,
+      "nationality": "Italy",
+      "photo": "https://media.api-sports.io/football/players/31009.png",
+      "team": "Inter Milan",
+      "position": "Defender"
+    },
+    {
+      "id": 25004,
+      "lastName": "ORTEGA",
+      "age": 33,
+      "nationality": "Germany",
+      "photo": "https://media.api-sports.io/football/players/25004.png",
+      "team": "Man City",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 61431,
+      "lastName": "KIWIOR",
+      "age": 25,
+      "nationality": "Poland",
+      "photo": "https://media.api-sports.io/football/players/61431.png",
+      "team": "Arsenal",
+      "position": "Defender"
+    },
+    {
+      "id": 31010,
+      "lastName": "DIMARCO",
+      "age": 28,
+      "nationality": "Italy",
+      "photo": "https://media.api-sports.io/football/players/31010.png",
+      "team": "Inter Milan",
+      "position": "Defender"
+    },
+    {
+      "id": 284230,
+      "lastName": "LEWIS",
+      "age": 21,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/284230.png",
+      "team": "Man City",
+      "position": "Defender"
+    },
+    {
+      "id": 284,
+      "lastName": "GOMEZ",
+      "age": 28,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/284.png",
+      "team": "Liverpool",
+      "position": "Defender"
+    },
+    {
+      "id": 1271,
+      "lastName": "TCHOUAMNI",
+      "age": 25,
+      "nationality": "France",
+      "photo": "https://media.api-sports.io/football/players/1271.png",
+      "team": "Real Madrid",
+      "position": "Midfielder"
+    },
+    {
+      "id": 280,
+      "lastName": "BECKER",
+      "age": 33,
+      "nationality": "Brazil",
+      "photo": "https://media.api-sports.io/football/players/280.png",
+      "team": "Liverpool",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 626,
+      "lastName": "STONES",
+      "age": 31,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/626.png",
+      "team": "Man City",
+      "position": "Defender"
+    },
+    {
+      "id": 641,
+      "lastName": "ZINCHENKO",
+      "age": 29,
+      "nationality": "Ukraine",
+      "photo": "https://media.api-sports.io/football/players/641.png",
+      "team": "Arsenal",
+      "position": "Defender"
+    },
+    {
+      "id": 41621,
+      "lastName": "NUNES",
+      "age": 27,
+      "nationality": "Portugal",
+      "photo": "https://media.api-sports.io/football/players/41621.png",
+      "team": "Man City",
+      "position": "Midfielder"
+    },
+    {
+      "id": 21138,
+      "lastName": "ATNOURI",
+      "age": 24,
+      "nationality": "Algeria",
+      "photo": "https://media.api-sports.io/football/players/21138.png",
+      "team": "Man City",
+      "position": "Defender"
+    },
+    {
+      "id": 226,
+      "lastName": "DUMFRIES",
+      "age": 29,
+      "nationality": "Netherlands",
+      "photo": "https://media.api-sports.io/football/players/226.png",
+      "team": "Inter Milan",
+      "position": "Defender"
+    },
+    {
+      "id": 289,
+      "lastName": "ROBERTSON",
+      "age": 31,
+      "nationality": "Scotland",
+      "photo": "https://media.api-sports.io/football/players/289.png",
+      "team": "Liverpool",
+      "position": "Defender"
+    },
+    {
+      "id": 118307,
+      "lastName": "PETROVI",
+      "age": 26,
+      "nationality": "Serbia",
+      "photo": "https://media.api-sports.io/football/players/118307.png",
+      "team": "Chelsea",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 41585,
+      "lastName": "RAMOS",
+      "age": 24,
+      "nationality": "Portugal",
+      "photo": "https://media.api-sports.io/football/players/41585.png",
+      "team": "PSG",
+      "position": "Attacker"
+    },
+    {
+      "id": 1468,
+      "lastName": "NKETIAH",
+      "age": 26,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/1468.png",
+      "team": "Arsenal",
+      "position": "Attacker"
+    },
+    {
+      "id": 136723,
+      "lastName": "MADUEKE",
+      "age": 23,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/136723.png",
+      "team": "Chelsea",
+      "position": "Attacker"
+    },
+    {
+      "id": 56473,
+      "lastName": "GABBIA",
+      "age": 26,
+      "nationality": "Italy",
+      "photo": "https://media.api-sports.io/football/players/56473.png",
+      "team": "AC Milan",
+      "position": "Defender"
+    },
+    {
+      "id": 180317,
+      "lastName": "BRADLEY",
+      "age": 22,
+      "nationality": "Northern Ireland",
+      "photo": "https://media.api-sports.io/football/players/180317.png",
+      "team": "Liverpool",
+      "position": "Defender"
+    },
+    {
+      "id": 1600,
+      "lastName": "TSIMIKAS",
+      "age": 29,
+      "nationality": "Greece",
+      "photo": "https://media.api-sports.io/football/players/1600.png",
+      "team": "Liverpool",
+      "position": "Defender"
+    },
+    {
+      "id": 2670,
+      "lastName": "MARTNEZ",
+      "age": 34,
+      "nationality": "Spain",
+      "photo": "https://media.api-sports.io/football/players/2670.png",
+      "team": "Barcelona",
+      "position": "Defender"
+    },
+    {
+      "id": 296667,
+      "lastName": "GAVI",
+      "age": 21,
+      "nationality": "Spain",
+      "photo": "https://media.api-sports.io/football/players/296667.png",
+      "team": "Barcelona",
+      "position": "Midfielder"
+    },
+    {
+      "id": 526,
+      "lastName": "ONANA",
+      "age": 29,
+      "nationality": "Cameroon",
+      "photo": "https://media.api-sports.io/football/players/526.png",
+      "team": "Man United",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 19354,
+      "lastName": "KONSA",
+      "age": 28,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/19354.png",
+      "team": "Aston Villa",
+      "position": "Defender"
+    },
+    {
+      "id": 19599,
+      "lastName": "MARTNEZ",
+      "age": 33,
+      "nationality": "Argentina",
+      "photo": "https://media.api-sports.io/football/players/19599.png",
+      "team": "Aston Villa",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 284324,
+      "lastName": "GARNACHO",
+      "age": 21,
+      "nationality": "Argentina",
+      "photo": "https://media.api-sports.io/football/players/284324.png",
+      "team": "Man United",
+      "position": "Attacker"
+    },
+    {
+      "id": 25282,
+      "lastName": "KOBEL",
+      "age": 28,
+      "nationality": "Switzerland",
+      "photo": "https://media.api-sports.io/football/players/25282.png",
+      "team": "Borussia Dortmund",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 19298,
+      "lastName": "CASH",
+      "age": 28,
+      "nationality": "Poland",
+      "photo": "https://media.api-sports.io/football/players/19298.png",
+      "team": "Aston Villa",
+      "position": "Defender"
+    },
+    {
+      "id": 2724,
+      "lastName": "DIGNE",
+      "age": 32,
+      "nationality": "France",
+      "photo": "https://media.api-sports.io/football/players/2724.png",
+      "team": "Aston Villa",
+      "position": "Defender"
+    },
+    {
+      "id": 31354,
+      "lastName": "VICARIO",
+      "age": 29,
+      "nationality": "Italy",
+      "photo": "https://media.api-sports.io/football/players/31354.png",
+      "team": "Tottenham",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 2864,
+      "lastName": "ISAK",
+      "age": 26,
+      "nationality": "Sweden",
+      "photo": "https://media.api-sports.io/football/players/2864.png",
+      "team": "Newcastle",
+      "position": "Attacker"
+    },
+    {
+      "id": 312,
+      "lastName": "MERET",
+      "age": 28,
+      "nationality": "Italy",
+      "photo": "https://media.api-sports.io/football/players/312.png",
+      "team": "Napoli",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 30776,
+      "lastName": "ROMERO",
+      "age": 27,
+      "nationality": "Argentina",
+      "photo": "https://media.api-sports.io/football/players/30776.png",
+      "team": "Tottenham",
+      "position": "Defender"
+    },
+    {
+      "id": 47519,
+      "lastName": "PORRO",
+      "age": 26,
+      "nationality": "Spain",
+      "photo": "https://media.api-sports.io/football/players/47519.png",
+      "team": "Tottenham",
+      "position": "Defender"
+    },
+    {
+      "id": 30435,
+      "lastName": "KULUSEVSKI",
+      "age": 25,
+      "nationality": "Sweden",
+      "photo": "https://media.api-sports.io/football/players/30435.png",
+      "team": "Tottenham",
+      "position": "Midfielder"
+    },
+    {
+      "id": 204039,
+      "lastName": "UDOGIE",
+      "age": 23,
+      "nationality": "Italy",
+      "photo": "https://media.api-sports.io/football/players/204039.png",
+      "team": "Tottenham",
+      "position": "Defender"
+    },
+    {
+      "id": 47275,
+      "lastName": "MARCOS",
+      "age": 36,
+      "nationality": "Spain",
+      "photo": "https://media.api-sports.io/football/players/47275.png",
+      "team": "Athletic Bilbao",
+      "position": "Defender"
+    },
+    {
+      "id": 158694,
+      "lastName": "LIVRAMENTO",
+      "age": 23,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/158694.png",
+      "team": "Newcastle",
+      "position": "Defender"
+    },
+    {
+      "id": 237129,
+      "lastName": "SARR",
+      "age": 23,
+      "nationality": "Senegal",
+      "photo": "https://media.api-sports.io/football/players/237129.png",
+      "team": "Tottenham",
+      "position": "Midfielder"
+    },
+    {
+      "id": 18784,
+      "lastName": "MADDISON",
+      "age": 29,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/18784.png",
+      "team": "Tottenham",
+      "position": "Midfielder"
+    },
+    {
+      "id": 18968,
+      "lastName": "BISSOUMA",
+      "age": 29,
+      "nationality": "Mali",
+      "photo": "https://media.api-sports.io/football/players/18968.png",
+      "team": "Tottenham",
+      "position": "Midfielder"
+    },
+    {
+      "id": 164,
+      "lastName": "DAVIES",
+      "age": 32,
+      "nationality": "Wales",
+      "photo": "https://media.api-sports.io/football/players/164.png",
+      "team": "Tottenham",
+      "position": "Defender"
+    },
+    {
+      "id": 889,
+      "lastName": "LINDELF",
+      "age": 31,
+      "nationality": "Sweden",
+      "photo": "https://media.api-sports.io/football/players/889.png",
+      "team": "Man United",
+      "position": "Defender"
+    },
+    {
+      "id": 18911,
+      "lastName": "POPE",
+      "age": 33,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/18911.png",
+      "team": "Newcastle",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 47254,
+      "lastName": "OLIVERA",
+      "age": 28,
+      "nationality": "Uruguay",
+      "photo": "https://media.api-sports.io/football/players/47254.png",
+      "team": "Napoli",
+      "position": "Defender"
+    },
+    {
+      "id": 863,
+      "lastName": "BENTANCUR",
+      "age": 28,
+      "nationality": "Uruguay",
+      "photo": "https://media.api-sports.io/football/players/863.png",
+      "team": "Tottenham",
+      "position": "Midfielder"
+    },
+    {
+      "id": 138908,
+      "lastName": "ANDERSON",
+      "age": 23,
+      "nationality": "Scotland",
+      "photo": "https://media.api-sports.io/football/players/138908.png",
+      "team": "Newcastle",
+      "position": "Midfielder"
+    },
+    {
+      "id": 26292,
+      "lastName": "MEYER",
+      "age": 34,
+      "nationality": "Germany",
+      "photo": "https://media.api-sports.io/football/players/26292.png",
+      "team": "Borussia Dortmund",
+      "position": "Goalkeeper"
+    },
+    {
+      "id": 19192,
+      "lastName": "RAMSEY",
+      "age": 24,
+      "nationality": "England",
+      "photo": "https://media.api-sports.io/football/players/19192.png",
+      "team": "Aston Villa",
+      "position": "Midfielder"
+    }
+  ]
+}

@@ -9,8 +9,20 @@ async function loadPlayers() {
     try {
         console.log('🔄 Loading players...');
         
-        // Try to get players from API/cache, fallback to JSON if fails
-        playerPool = await PlayerDataManager.getPlayersWithFallback();
+        // Get full player data from API/cache
+        const fullPlayerData = await PlayerDataManager.getPlayersWithFallback();
+        
+        // Extract just the last names for the Wordle game
+        if (Array.isArray(fullPlayerData) && fullPlayerData.length > 0) {
+            // Check if it's already just names (old format) or full objects (new format)
+            if (typeof fullPlayerData[0] === 'string') {
+                // Old format - just names
+                playerPool = fullPlayerData;
+            } else {
+                // New format - full player objects
+                playerPool = PlayerDataManager.getPlayerNames(fullPlayerData);
+            }
+        }
         
         console.log(`✅ Loaded ${playerPool.length} players`);
         isLoadingPlayers = false;
@@ -21,16 +33,9 @@ async function loadPlayers() {
     } catch (error) {
         console.error('❌ Error loading players:', error);
         
-        // Emergency fallback - load from JSON
-        try {
-            const response = await fetch('../assets/data/players.json');
-            const data = await response.json();
-            playerPool = data.players;
-            console.log('📄 Using fallback JSON file');
-        } catch (jsonError) {
-            console.error('❌ Fallback also failed:', jsonError);
-            playerPool = ['MESSI', 'RONALDO', 'NEYMAR', 'HAALAND', 'MBAPPE'];
-        }
+        // Emergency fallback
+        playerPool = ['MESSI', 'RONALDO', 'NEYMAR', 'HAALAND', 'MBAPPE'];
+        console.log('📄 Using emergency fallback names');
         
         isLoadingPlayers = false;
         initGame();
@@ -54,6 +59,7 @@ function initGame() {
         setTimeout(initGame, 100);
         return;
     }
+    
     targetPlayer = playerPool[Math.floor(Math.random() * playerPool.length)];
     currentRow = 0;
     currentTile = 0;
@@ -308,3 +314,4 @@ document.getElementById('playAgain').addEventListener('click', initGame);
 document.getElementById('modalButton').addEventListener('click', closeModal);
 document.getElementById('modalClose').addEventListener('click', closeModalOnly);
 
+// Players will load automatically via loadPlayers() call above

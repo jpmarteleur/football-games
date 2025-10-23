@@ -1,5 +1,5 @@
 // Player Data Manager - Handles API fetching and caching
-// This manages all player data from the API-Football API
+// Version 3.0 - Now saves FULL player data (photos, teams, stats, etc.)
 
 const PlayerDataManager = {
     // Check if cached data exists and is still valid
@@ -40,10 +40,11 @@ const PlayerDataManager = {
             const data = {
                 players: players,
                 timestamp: Date.now(),
-                version: '2.0' // Updated version with filtering
+                version: '3.0', // Updated version with full player data
+                totalPlayers: players.length
             };
             localStorage.setItem(CONFIG.CACHE_KEY, JSON.stringify(data));
-            console.log(`✅ Cached ${players.length} filtered players`);
+            console.log(`✅ Cached ${players.length} players with full data`);
         } catch (error) {
             console.error('Error saving to cache:', error);
         }
@@ -102,28 +103,53 @@ const PlayerDataManager = {
             const data = await response.json();
             
             if (response.ok && data.response) {
-                // Extract player data with COMBINED stats from ALL competitions
+                // Extract FULL player data with combined stats from ALL competitions
                 const players = data.response.map(p => {
                     // Sum stats across ALL competitions (La Liga, Champions League, etc.)
                     let totalAppearances = 0;
                     let totalMinutes = 0;
                     let totalLineups = 0;
+                    let totalGoals = 0;
+                    let totalAssists = 0;
+                    let position = 'Unknown';
                     
                     if (p.statistics && Array.isArray(p.statistics)) {
                         p.statistics.forEach(stat => {
                             const games = stat.games || {};
+                            const goals = stat.goals || {};
                             totalAppearances += games.appearences || 0;
                             totalMinutes += games.minutes || 0;
                             totalLineups += games.lineups || 0;
+                            totalGoals += goals.total || 0;
+                            totalAssists += goals.assists || 0;
+                            
+                            // Get position from first valid entry
+                            if (!position || position === 'Unknown') {
+                                position = games.position || 'Unknown';
+                            }
                         });
                     }
                     
                     return {
-                        name: this.cleanPlayerName(p.player.name),
-                        appearances: totalAppearances,
-                        minutes: totalMinutes,
-                        lineups: totalLineups,
-                        team: teamName
+                        // Basic Info
+                        id: p.player.id,
+                        lastName: this.cleanPlayerName(p.player.name),
+                        age: p.player.age,
+                        nationality: p.player.nationality,
+                        photo: p.player.photo,
+                        
+                        // Team Info
+                        team: teamName,
+                        
+                        // Position
+                        position: position,
+                        
+                        // Stats (only for filtering, not saved to final data)
+                        _filterStats: {
+                            appearances: totalAppearances,
+                            minutes: totalMinutes,
+                            lineups: totalLineups
+                        }
                     };
                 });
                 
@@ -144,32 +170,38 @@ const PlayerDataManager = {
         console.log(`🔍 Filtering ${players.length} players...`);
         
         // Step 1: Keep only valid Wordle names
-        let filtered = players.filter(p => this.isValidWordleName(p.name));
+        let filtered = players.filter(p => this.isValidWordleName(p.lastName));
         console.log(`After name validation: ${filtered.length} players`);
         
         // Step 2: BALANCED - Keep players with decent playing time
         // At least 15 appearances AND 10 lineups AND 800+ minutes
         filtered = filtered.filter(p => {
-            return p.appearances >= 15 && p.lineups >= 10 && p.minutes >= 800;
+            return p._filterStats.appearances >= 15 && p._filterStats.lineups >= 10 && p._filterStats.minutes >= 800;
         });
         console.log(`After playing time filter (BALANCED): ${filtered.length} players`);
         
         // Step 3: Sort by quality score (appearances + lineups priority)
         filtered.sort((a, b) => {
-            const scoreA = (a.lineups * 3) + a.appearances; // Lineups worth more
-            const scoreB = (b.lineups * 3) + b.appearances;
+            const scoreA = (a._filterStats.lineups * 3) + a._filterStats.appearances;
+            const scoreB = (b._filterStats.lineups * 3) + b._filterStats.appearances;
             return scoreB - scoreA;
         });
         
         // Step 4: Remove duplicates (keep the one with better stats)
         const uniqueMap = new Map();
         filtered.forEach(player => {
-            if (!uniqueMap.has(player.name)) {
-                uniqueMap.set(player.name, player);
+            if (!uniqueMap.has(player.lastName)) {
+                uniqueMap.set(player.lastName, player);
             }
         });
         
         const result = Array.from(uniqueMap.values());
+        
+        // Step 5: Remove the temporary filter stats from final data
+        result.forEach(player => {
+            delete player._filterStats;
+        });
+        
         console.log(`✅ Final filtered list: ${result.length} quality players`);
         
         return result;
@@ -196,7 +228,7 @@ const PlayerDataManager = {
             
             completed++;
             
-            // Wait 1 second between requests to avoid rate limiting
+            // Wait 1 second between requests
             if (completed < teams.length) {
                 await new Promise(resolve => setTimeout(resolve, 1000));
             }
@@ -207,8 +239,23 @@ const PlayerDataManager = {
         // Filter to quality players only
         const qualityPlayers = this.filterQualityPlayers(allPlayers);
         
-        // Return just the names for the game
-        return qualityPlayers.map(p => p.name);
+        // Save full player data
+        return qualityPlayers;
+    },
+    
+    // Get just player names for Wordle (backward compatibility)
+    getPlayerNames(fullPlayerData) {
+        return fullPlayerData.map(p => p.lastName);
+    },
+    
+    // Export full data to JSON format (for saving to file)
+    exportToJSON(fullPlayerData) {
+        return JSON.stringify({
+            version: "3.0",
+            lastUpdated: new Date().toISOString(),
+            totalPlayers: fullPlayerData.length,
+            players: fullPlayerData
+        }, null, 2);
     },
     
     // Main function: Get players (from cache or API)
@@ -223,7 +270,7 @@ const PlayerDataManager = {
         }
         
         console.log('🌐 Fetching fresh player data from API...');
-        console.log('⚠️ This will take about 15-20 seconds (15 API calls with delays)');
+        console.log('⚠️ This will take about 20-30 seconds (11 teams with 2-second delays)');
         
         // Fetch from API
         const players = await this.fetchAllPlayers(onProgress);
@@ -249,21 +296,43 @@ const PlayerDataManager = {
         }
     },
     
-    // Smart get: Try cache -> API -> fallback
+    // Load players from local JSON file
+    async loadFromJSON() {
+        try {
+            const response = await fetch('../assets/data/full-players.json');
+            const data = await response.json();
+            console.log(`📄 Loaded ${data.totalPlayers} players from JSON file`);
+            return data.players;
+        } catch (error) {
+            console.error('❌ Error loading JSON file:', error);
+            return null;
+        }
+    },
+    
+    // Smart get: Try JSON -> cache -> API -> emergency fallback
     async getPlayersWithFallback(onProgress = null) {
         try {
+            // PRIORITY 1: Try loading from JSON file first
+            const jsonPlayers = await this.loadFromJSON();
+            if (jsonPlayers && jsonPlayers.length > 0) {
+                console.log('✅ Using players from JSON file');
+                return jsonPlayers;
+            }
+            
+            // PRIORITY 2: Try cache/API
             const players = await this.getPlayers(onProgress);
             
             if (players.length > 0) {
                 return players;
             } else {
-                console.warn('⚠️ No players from API, using fallback');
-                return await this.getFallbackPlayers();
+                // PRIORITY 3: Emergency fallback (hardcoded names)
+                console.warn('⚠️ No players from JSON or API, using emergency fallback');
+                return ['MESSI', 'RONALDO', 'NEYMAR', 'HAALAND', 'MBAPPE'];
             }
         } catch (error) {
             console.error('❌ Error fetching players:', error);
-            console.log('📄 Using fallback player list');
-            return await this.getFallbackPlayers();
+            // Emergency fallback
+            return ['MESSI', 'RONALDO', 'NEYMAR', 'HAALAND', 'MBAPPE'];
         }
     },
     
