@@ -1,5 +1,34 @@
 // Use shared stats functions
 const STATS_KEY = 'wordleStats';
+const DIFFICULTY_KEY = 'wordleDifficulty';
+
+// Difficulty settings
+const DIFFICULTY_SETTINGS = {
+    easy: {
+        nameLength: { min: 8, max: 12 },
+        showNationality: true,
+        showPosition: true,
+        label: 'EASY',
+        emoji: '🟢'
+    },
+    medium: {
+        nameLength: { min: 5, max: 10 },
+        showNationality: true,
+        showPosition: false,
+        label: 'MEDIUM',
+        emoji: '🟡'
+    },
+    hard: {
+        nameLength: { min: 4, max: 7 },
+        showNationality: false,
+        showPosition: false,
+        label: 'HARD',
+        emoji: '🔴'
+    }
+};
+
+let currentDifficulty = null;
+
 // Pool of famous soccer players
 let playerPool = [];
 let fullPlayerData = []; // Store full player objects
@@ -47,6 +76,90 @@ async function loadPlayers() {
 
 // Start loading players immediately
 loadPlayers();
+
+// Difficulty Management Functions
+function saveDifficulty(difficulty) {
+    localStorage.setItem(DIFFICULTY_KEY, difficulty);
+}
+
+function loadSavedDifficulty() {
+    return localStorage.getItem(DIFFICULTY_KEY) || null;
+}
+
+function filterPlayersByDifficulty(allPlayers, difficulty) {
+    const settings = DIFFICULTY_SETTINGS[difficulty];
+    
+    return allPlayers.filter(player => {
+        const nameLength = player.lastName.length;
+        return nameLength >= settings.nameLength.min && nameLength <= settings.nameLength.max;
+    });
+}
+
+function showDifficultySelector() {
+    document.getElementById('difficultySelector').style.display = 'block';
+    document.getElementById('gameInfo').style.display = 'none';
+    document.getElementById('gameBoard').style.display = 'none';
+    document.getElementById('keyboardInfo').style.display = 'none';
+    document.getElementById('changeDifficulty').style.display = 'none';
+}
+
+function hideDifficultySelector() {
+    document.getElementById('difficultySelector').style.display = 'none';
+    document.getElementById('gameInfo').style.display = 'block';
+    document.getElementById('gameBoard').style.display = 'flex';
+    document.getElementById('keyboardInfo').style.display = 'block';
+    document.getElementById('changeDifficulty').style.display = 'block';
+}
+
+function updateDifficultyIndicator() {
+    const settings = DIFFICULTY_SETTINGS[currentDifficulty];
+    const indicator = document.getElementById('difficultyIndicator');
+    indicator.textContent = `${settings.emoji} ${settings.label}`;
+    indicator.className = `difficulty-indicator ${currentDifficulty}`;
+}
+
+function updateGameHints() {
+    const settings = DIFFICULTY_SETTINGS[currentDifficulty];
+    const hintsContainer = document.getElementById('gameHints');
+    
+    if (!settings.showNationality && !settings.showPosition) {
+        hintsContainer.style.display = 'none';
+        return;
+    }
+    
+    hintsContainer.style.display = 'block';
+    let hintsHTML = '';
+    
+    if (targetPlayerData) {
+        if (settings.showNationality) {
+            hintsHTML += `<p><span class="hint-label">Nationality:</span> ${targetPlayerData.nationality}</p>`;
+        }
+        if (settings.showPosition) {
+            hintsHTML += `<p><span class="hint-label">Position:</span> ${targetPlayerData.position}</p>`;
+        }
+    }
+    
+    hintsContainer.innerHTML = hintsHTML;
+}
+
+function selectDifficulty(difficulty) {
+    currentDifficulty = difficulty;
+    saveDifficulty(difficulty);
+    
+    // Add visual feedback with delay for animation
+    const selectedCard = document.querySelector(`.difficulty-card[data-difficulty="${difficulty}"]`);
+    if (selectedCard) {
+        selectedCard.classList.add('selecting');
+        setTimeout(() => {
+            hideDifficultySelector();
+            initGame();
+        }, 600);
+    } else {
+        hideDifficultySelector();
+        initGame();
+    }
+}
+
 let targetPlayer = '';
 let targetPlayerData = null; // Store full player object for current game
 let currentRow = 0;
@@ -57,6 +170,12 @@ let guesses = [];
 
 // Initialize game
 function initGame() {
+    // Check if difficulty is selected
+    if (!currentDifficulty) {
+        showDifficultySelector();
+        return;
+    }
+    
     // Wait for players to load
     if (isLoadingPlayers || playerPool.length === 0) {
         console.log('⏳ Waiting for players to load...');
@@ -64,16 +183,23 @@ function initGame() {
         return;
     }
     
-    // Pick a random player
-    const randomIndex = Math.floor(Math.random() * playerPool.length);
-    targetPlayer = playerPool[randomIndex];
+    // Filter players by difficulty
+    const filteredPlayers = filterPlayersByDifficulty(fullPlayerData, currentDifficulty);
     
-    // Get full player data if available
-    if (fullPlayerData.length > 0) {
-        targetPlayerData = fullPlayerData[randomIndex];
-    } else {
-        targetPlayerData = null;
+    if (filteredPlayers.length === 0) {
+        console.error('❌ No players match the difficulty criteria!');
+        alert('No players available for this difficulty. Please try another difficulty.');
+        currentDifficulty = null;
+        showDifficultySelector();
+        return;
     }
+    
+    // Pick a random player from filtered list
+    const randomIndex = Math.floor(Math.random() * filteredPlayers.length);
+    targetPlayerData = filteredPlayers[randomIndex];
+    targetPlayer = targetPlayerData.lastName;
+    
+    console.log(`Selected player: ${targetPlayer} (${currentDifficulty} mode)`);
     
     currentRow = 0;
     currentTile = 0;
@@ -83,8 +209,10 @@ function initGame() {
     document.getElementById('message').className = 'message';
     document.getElementById('message').style.display = 'none';
     document.getElementById('playAgain').classList.remove('show');
-    document.getElementById('targetLength').textContent = targetPlayer.length;
-    updateAttemptsDisplay();
+    
+    // Removed targetLength display - no longer needed
+    updateDifficultyIndicator();
+    updateGameHints();
     
     createBoard();
     
@@ -185,7 +313,6 @@ function submitGuess() {
     // Move to next row
     currentRow++;
     currentTile = 0;
-    updateAttemptsDisplay();
     updateBoard();
     
     // Check lose condition
@@ -235,16 +362,16 @@ function colorTiles(row, guess) {
     });
 }
 
-// Update attempts display
-function updateAttemptsDisplay() {
-    document.getElementById('attempts').textContent = `${currentRow}/${maxAttempts}`;
-}
+// Update attempts display - REMOVED (no longer showing attempts in UI)
+// function updateAttemptsDisplay() {
+//     document.getElementById('attempts').textContent = `${currentRow}/${maxAttempts}`;
+// }
 
 function endGame(won) {
     gameOver = true;
     
     // Show modal instead of inline message
-    showModal(won);
+    showModal(won, currentDifficulty);
     
     // Keep the old message hidden
     const messageEl = document.getElementById('message');
@@ -255,14 +382,15 @@ function endGame(won) {
 }
 
 // Show modal popup
-function showModal(won) {
+function showModal(won, difficulty) {
     const modal = document.getElementById('gameModal');
     const icon = document.getElementById('modalIcon');
     const title = document.getElementById('modalTitle');
     const message = document.getElementById('modalMessage');
     
-    // Update and get stats
-    const stats = updateStats(STATS_KEY, won);
+    // Update and get stats for current difficulty
+    const statsKey = `${STATS_KEY}_${difficulty}`;
+    const stats = updateStats(statsKey, won);
     const winRate = getWinRate(stats);
     
     // Update stats display
@@ -284,12 +412,16 @@ function showModal(won) {
         `;
     }
     
+    const difficultySettings = DIFFICULTY_SETTINGS[difficulty];
+    const difficultyBadge = `<span style="background: ${difficulty === 'easy' ? '#4ade80' : difficulty === 'medium' ? '#fbbf24' : '#ef4444'}; padding: 4px 12px; border-radius: 15px; font-size: 0.85em; font-weight: 700;">${difficultySettings.emoji} ${difficultySettings.label}</span>`;
+    
     if (won) {
         const attemptNumber = currentRow + 1;
         title.textContent = 'GOAL!';
         title.className = 'modal-title win';
         message.innerHTML = `
             You guessed in <strong>${attemptNumber}</strong> ${attemptNumber === 1 ? 'attempt' : 'attempts'}!
+            <div style="margin-top: 10px;">${difficultyBadge}</div>
             ${playerInfoHTML}
             <div style="margin-top: 10px;">Amazing work! 🏆</div>
         `;
@@ -298,6 +430,7 @@ function showModal(won) {
         title.className = 'modal-title lose';
         message.innerHTML = `
             The player was:
+            <div style="margin-top: 10px;">${difficultyBadge}</div>
             ${playerInfoHTML}
             <div style="margin-top: 10px;">Better luck next time! 💪</div>
         `;
@@ -344,10 +477,35 @@ function closeModalOnly() {
     modal.classList.remove('show');
 }
 
-// Event listeners
-document.addEventListener('keydown', handleKeyPress);
-document.getElementById('playAgain').addEventListener('click', initGame);
-document.getElementById('modalButton').addEventListener('click', closeModal);
-document.getElementById('modalClose').addEventListener('click', closeModalOnly);
+// Event listeners - Wait for DOM to load
+document.addEventListener('DOMContentLoaded', function() {
+    // Keyboard listener
+    document.addEventListener('keydown', handleKeyPress);
+    
+    // Game control buttons
+    document.getElementById('playAgain').addEventListener('click', initGame);
+    document.getElementById('modalButton').addEventListener('click', closeModal);
+    document.getElementById('modalClose').addEventListener('click', closeModalOnly);
+
+    // Difficulty selection event listeners
+    document.querySelectorAll('.difficulty-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const difficulty = this.getAttribute('data-difficulty');
+            selectDifficulty(difficulty);
+        });
+    });
+
+    // Change difficulty button
+    document.getElementById('changeDifficulty').addEventListener('click', function() {
+        currentDifficulty = null;
+        showDifficultySelector();
+    });
+
+    // Check for saved difficulty preference on load
+    const savedDifficulty = loadSavedDifficulty();
+    if (savedDifficulty) {
+        currentDifficulty = savedDifficulty;
+    }
+});
 
 // Players will load automatically via loadPlayers() call above

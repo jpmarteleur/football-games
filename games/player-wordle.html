@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Wordle - Football Games</title>
-    <link rel="stylesheet" href="../assets/css/variables.css">
-    <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/player-wordle.css">
-    <link rel="stylesheet" href="../assets/css/modal.css">
+    <link rel="stylesheet" href="../assets/css/variables.css?v=5">
+    <link rel="stylesheet" href="../assets/css/global.css?v=5">
+    <link rel="stylesheet" href="../assets/css/player-wordle.css?v=5">
+    <link rel="stylesheet" href="../assets/css/modal.css?v=5">
 </head>
 <body>
     <nav class="navbar">
@@ -17,23 +17,59 @@
     </nav>
     <div class="main-content">
         <div class="container">
-            <div class="soccer-icon">⚽</div>
-        <h1>PLAYER WORDLE</h1>
-        <p class="subtitle">🏆 Guess the player's name! 🏆</p>
+        <!-- Difficulty Selection Screen -->
+        <div class="difficulty-selector" id="difficultySelector">
+            <h2 class="difficulty-title">Choose Your Difficulty</h2>
+            <p class="difficulty-subtitle">Pick a challenge level to begin</p>
+            
+            <div class="difficulty-cards">
+                <div class="difficulty-card easy" data-difficulty="easy">
+                    <div class="difficulty-badge">🟢</div>
+                    <h3>EASY</h3>
+                    <div class="difficulty-features">
+                        <p>Nationality revealed</p>
+                        <p>Position revealed</p>
+                        <p>8-12 letter names</p>
+                    </div>
+                </div>
+                
+                <div class="difficulty-card medium" data-difficulty="medium">
+                    <div class="difficulty-badge">🟡</div>
+                    <h3>MEDIUM</h3>
+                    <div class="difficulty-features">
+                        <p>Nationality revealed</p>
+                        <p>Position hidden</p>
+                        <p>5-10 letter names</p>
+                    </div>
+                </div>
+                
+                <div class="difficulty-card hard" data-difficulty="hard">
+                    <div class="difficulty-badge">🔴</div>
+                    <h3>HARD</h3>
+                    <div class="difficulty-features">
+                        <p>No hints given</p>
+                        <p>Position hidden</p>
+                        <p>4-7 letter names</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-        <div class="game-info">
-            <p>ATTEMPTS: <span class="attempts" id="attempts">0/6</span></p>
-            <p class="target-length">Target length: <span id="targetLength"></span> letters</p>
+        <!-- Game Info Box (shown after difficulty selection) -->
+        <div class="game-info" id="gameInfo" style="display: none;">
+            <div class="difficulty-indicator" id="difficultyIndicator"></div>
+            <div class="game-hints" id="gameHints"></div>
         </div>
 
-        <div class="game-board" id="gameBoard"></div>
+        <div class="game-board" id="gameBoard" style="display: none;"></div>
 
-        <div class="keyboard-info">
+        <div class="keyboard-info" id="keyboardInfo" style="display: none;">
             <p>Type to fill the row, press ENTER to submit, BACKSPACE to delete</p>
         </div>
 
         <div class="message" id="message"></div>
         <button class="play-again" id="playAgain">🔄 Play Again</button>
+        <button class="change-difficulty" id="changeDifficulty" style="display: none;">⚙️ Change Difficulty</button>
     </div>
     <div class="modal" id="gameModal">
         <div class="modal-content">
@@ -66,9 +102,9 @@
             <button class="modal-button" id="modalButton">Play Again</button>
         </div>
     </div>
-    <script src="../config.js"></script>
-    <script src="../assets/js/player-data-manager.js"></script>
-    <script src="../assets/js/stats.js"></script>
-    <script src="../assets/js/player-wordle.js"></script>
+    <script src="../config.js?v=4"></script>
+    <script src="../assets/js/player-data-manager.js?v=4"></script>
+    <script src="../assets/js/stats.js?v=4"></script>
+    <script src="../assets/js/player-wordle.js?v=4"></script>
 </body>
 </html>
