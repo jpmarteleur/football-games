@@ -2,6 +2,7 @@
 const STATS_KEY = 'wordleStats';
 // Pool of famous soccer players
 let playerPool = [];
+let fullPlayerData = []; // Store full player objects
 let isLoadingPlayers = true;
 
 // Load players from API (with fallback to JSON)
@@ -10,17 +11,19 @@ async function loadPlayers() {
         console.log('🔄 Loading players...');
         
         // Get full player data from API/cache
-        const fullPlayerData = await PlayerDataManager.getPlayersWithFallback();
+        const data = await PlayerDataManager.getPlayersWithFallback();
         
         // Extract just the last names for the Wordle game
-        if (Array.isArray(fullPlayerData) && fullPlayerData.length > 0) {
+        if (Array.isArray(data) && data.length > 0) {
             // Check if it's already just names (old format) or full objects (new format)
-            if (typeof fullPlayerData[0] === 'string') {
+            if (typeof data[0] === 'string') {
                 // Old format - just names
-                playerPool = fullPlayerData;
+                playerPool = data;
+                fullPlayerData = []; // No full data available
             } else {
                 // New format - full player objects
-                playerPool = PlayerDataManager.getPlayerNames(fullPlayerData);
+                fullPlayerData = data; // Store full data
+                playerPool = PlayerDataManager.getPlayerNames(data);
             }
         }
         
@@ -45,6 +48,7 @@ async function loadPlayers() {
 // Start loading players immediately
 loadPlayers();
 let targetPlayer = '';
+let targetPlayerData = null; // Store full player object for current game
 let currentRow = 0;
 let currentTile = 0;
 const maxAttempts = 6;
@@ -60,7 +64,17 @@ function initGame() {
         return;
     }
     
-    targetPlayer = playerPool[Math.floor(Math.random() * playerPool.length)];
+    // Pick a random player
+    const randomIndex = Math.floor(Math.random() * playerPool.length);
+    targetPlayer = playerPool[randomIndex];
+    
+    // Get full player data if available
+    if (fullPlayerData.length > 0) {
+        targetPlayerData = fullPlayerData[randomIndex];
+    } else {
+        targetPlayerData = null;
+    }
+    
     currentRow = 0;
     currentTile = 0;
     gameOver = false;
@@ -254,17 +268,39 @@ function showModal(won) {
     // Update stats display
     updateStatsDisplay(stats, winRate, won);
     
+    // Build player info HTML
+    let playerInfoHTML = '';
+    if (targetPlayerData) {
+        playerInfoHTML = `
+            <div style="margin: 15px 0;">
+                <img src="${targetPlayerData.photo}" 
+                     alt="${targetPlayerData.lastName}" 
+                     style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #ffd700;"
+                     onerror="this.style.display='none'">
+                <div style="font-size: 1.2em; font-weight: bold; color: #1a472a; margin-top: 10px;">
+                    ${targetPlayerData.lastName}
+                </div>
+            </div>
+        `;
+    }
+    
     if (won) {
         const attemptNumber = currentRow + 1;
-        icon.textContent = '⚽🎉';
         title.textContent = 'GOAL!';
         title.className = 'modal-title win';
-        message.innerHTML = `You guessed <strong>${targetPlayer}</strong> in <strong>${attemptNumber}</strong> ${attemptNumber === 1 ? 'attempt' : 'attempts'}!<br><br>Amazing work! 🏆`;
+        message.innerHTML = `
+            You guessed in <strong>${attemptNumber}</strong> ${attemptNumber === 1 ? 'attempt' : 'attempts'}!
+            ${playerInfoHTML}
+            <div style="margin-top: 10px;">Amazing work! 🏆</div>
+        `;
     } else {
-        icon.textContent = '😢⚽';
         title.textContent = 'MISS!';
         title.className = 'modal-title lose';
-        message.innerHTML = `The player was <strong>${targetPlayer}</strong><br><br>Better luck next time! Keep trying! 💪`;
+        message.innerHTML = `
+            The player was:
+            ${playerInfoHTML}
+            <div style="margin-top: 10px;">Better luck next time! 💪</div>
+        `;
     }
     
     modal.classList.add('show');
