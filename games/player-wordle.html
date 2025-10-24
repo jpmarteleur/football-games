@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Wordle - Football Games</title>
-    <link rel="stylesheet" href="../assets/css/variables.css?v=5">
-    <link rel="stylesheet" href="../assets/css/global.css?v=5">
-    <link rel="stylesheet" href="../assets/css/player-wordle.css?v=5">
-    <link rel="stylesheet" href="../assets/css/modal.css?v=5">
+    <link rel="stylesheet" href="../assets/css/variables.css?v=7">
+    <link rel="stylesheet" href="../assets/css/global.css?v=7">
+    <link rel="stylesheet" href="../assets/css/player-wordle.css?v=7">
+    <link rel="stylesheet" href="../assets/css/modal.css?v=7">
 </head>
 <body>
     <nav class="navbar">
@@ -68,8 +68,10 @@
         </div>
 
         <div class="message" id="message"></div>
-        <button class="play-again" id="playAgain">🔄 Play Again</button>
-        <button class="change-difficulty" id="changeDifficulty" style="display: none;">⚙️ Change Difficulty</button>
+        <div class="game-buttons" id="gameButtons" style="display: none;">
+            <button class="play-again-btn" id="playAgain">🔄 Restart</button>
+            <button class="change-difficulty" id="changeDifficulty">⚙️ Change Difficulty</button>
+        </div>
     </div>
     <div class="modal" id="gameModal">
         <div class="modal-content">
@@ -102,9 +104,9 @@
             <button class="modal-button" id="modalButton">Play Again</button>
         </div>
     </div>
-    <script src="../config.js?v=4"></script>
-    <script src="../assets/js/player-data-manager.js?v=4"></script>
-    <script src="../assets/js/stats.js?v=4"></script>
-    <script src="../assets/js/player-wordle.js?v=4"></script>
+    <script src="../config.js?v=7"></script>
+    <script src="../assets/js/player-data-manager.js?v=7"></script>
+    <script src="../assets/js/stats.js?v=7"></script>
+    <script src="../assets/js/player-wordle.js?v=7"></script>
 </body>
 </html>

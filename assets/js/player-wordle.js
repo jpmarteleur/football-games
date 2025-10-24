@@ -100,7 +100,7 @@ function showDifficultySelector() {
     document.getElementById('gameInfo').style.display = 'none';
     document.getElementById('gameBoard').style.display = 'none';
     document.getElementById('keyboardInfo').style.display = 'none';
-    document.getElementById('changeDifficulty').style.display = 'none';
+    document.getElementById('gameButtons').style.display = 'none';
 }
 
 function hideDifficultySelector() {
@@ -108,7 +108,7 @@ function hideDifficultySelector() {
     document.getElementById('gameInfo').style.display = 'block';
     document.getElementById('gameBoard').style.display = 'flex';
     document.getElementById('keyboardInfo').style.display = 'block';
-    document.getElementById('changeDifficulty').style.display = 'block';
+    document.getElementById('gameButtons').style.display = 'flex';
 }
 
 function updateDifficultyIndicator() {

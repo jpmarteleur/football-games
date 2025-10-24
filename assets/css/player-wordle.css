@@ -354,6 +354,62 @@
     letter-spacing: 0.5px;
 }
 
+/* Game Buttons Container */
+.game-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+/* Play Again Button */
+.play-again-btn {
+    background: linear-gradient(135deg, #2d8f3d 0%, #1a6b2a 100%);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 1em;
+    font-weight: 800;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.play-again-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.play-again-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.play-again-btn:hover {
+    background: linear-gradient(135deg, #1a6b2a 0%, #0f4d1d 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.play-again-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
 /* Change Difficulty Button */
 .change-difficulty {
     background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
@@ -364,7 +420,6 @@
     font-weight: 800;
     border-radius: 12px;
     cursor: pointer;
-    margin-top: 15px;
     transition: all 0.3s ease;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
