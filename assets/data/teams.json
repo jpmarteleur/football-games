@@ -68,7 +68,7 @@
     "founded": 1899,
     "country": "Spain",
     "city": "Barcelona",
-    "stadium": "Estadi Olímpic Lluís Companys",
+    "stadium": "Camp Nou",
     "logo": "https://media.api-sports.io/football/teams/529.png"
   },
   {
@@ -229,7 +229,7 @@
     "name": "Lille",
     "founded": 1944,
     "country": "France",
-    "city": "Villeneuve d&apos;Ascq",
+    "city": "Lille",
     "stadium": "Decathlon Arena – Stade Pierre-Mauroy",
     "logo": "https://media.api-sports.io/football/teams/79.png"
   },
