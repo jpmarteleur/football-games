@@ -117,7 +117,7 @@ function renderGame() {
             <!-- Input Section -->
             <div class="input-section">
                 <label class="input-label" for="guessInput">
-                    ⚽ Guess the team name:
+                    <img src="../assets/images/soccer-ball.svg" alt="Soccer Ball" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;"> Guess the team name:
                 </label>
                 <input 
                     type="text" 
@@ -206,7 +206,7 @@ function handleGuess() {
 
     // Validate input
     if (!guess) {
-        alert('⚽ Please enter a team name!');
+        alert('Please enter a team name!');
         return;
     }
 

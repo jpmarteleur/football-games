@@ -28,9 +28,12 @@ body {
 }
 
 body::before {
-    content: '⚽';
+    content: '';
     position: fixed;
-    font-size: 300px;
+    width: 150px;
+    height: 150px;
+    background: url('../images/soccer-ball.svg') no-repeat center center;
+    background-size: contain;
     opacity: 0.02;
     top: 50%;
     left: 50%;
@@ -87,6 +90,15 @@ body::before {
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
     transform: scale(1.05);
     display: inline-block;
+}
+
+/* Navigation icon styling */
+.nav-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    vertical-align: middle;
+    margin-right: 8px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .nav-menu {
@@ -203,10 +215,15 @@ h1 {
 
 .soccer-icon {
     text-align: center;
-    font-size: 3em;
+    font-size: 1.5em;
     margin-bottom: 10px;
     animation: bounce 2s ease-in-out infinite;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.soccer-icon img {
+    width: 1.5em;
+    height: 1.5em;
 }
 
 @keyframes bounce {

@@ -294,7 +294,7 @@ function deleteLetter() {
 function submitGuess() {
     // Check if row is complete
     if (currentTile !== targetPlayer.length) {
-        alert(`⚽ Please enter all ${targetPlayer.length} letters!`);
+        alert(`Please enter all ${targetPlayer.length} letters!`);
         return;
     }
     
