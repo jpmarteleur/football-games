@@ -1,0 +1,272 @@
+[
+  {
+    "id": 33,
+    "name": "Manchester United",
+    "founded": 1878,
+    "country": "England",
+    "city": "Manchester",
+    "stadium": "Old Trafford",
+    "logo": "https://media.api-sports.io/football/teams/33.png"
+  },
+  {
+    "id": 34,
+    "name": "Newcastle",
+    "founded": 1892,
+    "country": "England",
+    "city": "Newcastle upon Tyne",
+    "stadium": "St. James' Park",
+    "logo": "https://media.api-sports.io/football/teams/34.png"
+  },
+  {
+    "id": 40,
+    "name": "Liverpool",
+    "founded": 1892,
+    "country": "England",
+    "city": "Liverpool",
+    "stadium": "Anfield",
+    "logo": "https://media.api-sports.io/football/teams/40.png"
+  },
+  {
+    "id": 42,
+    "name": "Arsenal",
+    "founded": 1886,
+    "country": "England",
+    "city": "London",
+    "stadium": "Emirates Stadium",
+    "logo": "https://media.api-sports.io/football/teams/42.png"
+  },
+  {
+    "id": 47,
+    "name": "Tottenham",
+    "founded": 1882,
+    "country": "England",
+    "city": "London",
+    "stadium": "Tottenham Hotspur Stadium",
+    "logo": "https://media.api-sports.io/football/teams/47.png"
+  },
+  {
+    "id": 49,
+    "name": "Chelsea",
+    "founded": 1905,
+    "country": "England",
+    "city": "London",
+    "stadium": "Stamford Bridge",
+    "logo": "https://media.api-sports.io/football/teams/49.png"
+  },
+  {
+    "id": 50,
+    "name": "Manchester City",
+    "founded": 1880,
+    "country": "England",
+    "city": "Manchester",
+    "stadium": "Etihad Stadium",
+    "logo": "https://media.api-sports.io/football/teams/50.png"
+  },
+  {
+    "id": 529,
+    "name": "Barcelona",
+    "founded": 1899,
+    "country": "Spain",
+    "city": "Barcelona",
+    "stadium": "Estadi Olímpic Lluís Companys",
+    "logo": "https://media.api-sports.io/football/teams/529.png"
+  },
+  {
+    "id": 530,
+    "name": "Atletico Madrid",
+    "founded": 1903,
+    "country": "Spain",
+    "city": "Madrid",
+    "stadium": "Estádio Cívitas Metropolitano",
+    "logo": "https://media.api-sports.io/football/teams/530.png"
+  },
+  {
+    "id": 531,
+    "name": "Athletic Club",
+    "founded": 1898,
+    "country": "Spain",
+    "city": "Bilbao",
+    "stadium": "San Mamés Barria",
+    "logo": "https://media.api-sports.io/football/teams/531.png"
+  },
+  {
+    "id": 532,
+    "name": "Valencia",
+    "founded": 1919,
+    "country": "Spain",
+    "city": "Valencia",
+    "stadium": "Estadio de Mestalla",
+    "logo": "https://media.api-sports.io/football/teams/532.png"
+  },
+  {
+    "id": 536,
+    "name": "Sevilla",
+    "founded": 1890,
+    "country": "Spain",
+    "city": "Sevilla",
+    "stadium": "Estadio Ramón Sánchez Pizjuán",
+    "logo": "https://media.api-sports.io/football/teams/536.png"
+  },
+  {
+    "id": 541,
+    "name": "Real Madrid",
+    "founded": 1902,
+    "country": "Spain",
+    "city": "Madrid",
+    "stadium": "Estadio Santiago Bernabéu",
+    "logo": "https://media.api-sports.io/football/teams/541.png"
+  },
+  {
+    "id": 548,
+    "name": "Real Sociedad",
+    "founded": 1909,
+    "country": "Spain",
+    "city": "Donostia-San Sebastián",
+    "stadium": "Reale Arena",
+    "logo": "https://media.api-sports.io/football/teams/548.png"
+  },
+  {
+    "id": 157,
+    "name": "Bayern München",
+    "founded": 1900,
+    "country": "Germany",
+    "city": "München",
+    "stadium": "Fußball Arena München",
+    "logo": "https://media.api-sports.io/football/teams/157.png"
+  },
+  {
+    "id": 165,
+    "name": "Borussia Dortmund",
+    "founded": 1909,
+    "country": "Germany",
+    "city": "Dortmund",
+    "stadium": "BVB Stadion Dortmund",
+    "logo": "https://media.api-sports.io/football/teams/165.png"
+  },
+  {
+    "id": 168,
+    "name": "Bayer Leverkusen",
+    "founded": 1904,
+    "country": "Germany",
+    "city": "Leverkusen",
+    "stadium": "BayArena",
+    "logo": "https://media.api-sports.io/football/teams/168.png"
+  },
+  {
+    "id": 173,
+    "name": "RB Leipzig",
+    "founded": 2009,
+    "country": "Germany",
+    "city": "Leipzig",
+    "stadium": "Leipzig Stadium",
+    "logo": "https://media.api-sports.io/football/teams/173.png"
+  },
+  {
+    "id": 487,
+    "name": "Lazio",
+    "founded": 1900,
+    "country": "Italy",
+    "city": "Roma",
+    "stadium": "Stadio Olimpico",
+    "logo": "https://media.api-sports.io/football/teams/487.png"
+  },
+  {
+    "id": 489,
+    "name": "AC Milan",
+    "founded": 1899,
+    "country": "Italy",
+    "city": "Milano",
+    "stadium": "Stadio Giuseppe Meazza",
+    "logo": "https://media.api-sports.io/football/teams/489.png"
+  },
+  {
+    "id": 492,
+    "name": "Napoli",
+    "founded": 1904,
+    "country": "Italy",
+    "city": "Napoli",
+    "stadium": "Stadio Diego Armando Maradona",
+    "logo": "https://media.api-sports.io/football/teams/492.png"
+  },
+  {
+    "id": 496,
+    "name": "Juventus",
+    "founded": 1897,
+    "country": "Italy",
+    "city": "Torino",
+    "stadium": "Allianz Stadium",
+    "logo": "https://media.api-sports.io/football/teams/496.png"
+  },
+  {
+    "id": 497,
+    "name": "AS Roma",
+    "founded": 1927,
+    "country": "Italy",
+    "city": "Roma",
+    "stadium": "Stadio Olimpico",
+    "logo": "https://media.api-sports.io/football/teams/497.png"
+  },
+  {
+    "id": 499,
+    "name": "Atalanta",
+    "founded": 1907,
+    "country": "Italy",
+    "city": "Bergamo",
+    "stadium": "Gewiss Stadium",
+    "logo": "https://media.api-sports.io/football/teams/499.png"
+  },
+  {
+    "id": 500,
+    "name": "Bologna",
+    "founded": 1909,
+    "country": "Italy",
+    "city": "Bologna",
+    "stadium": "Stadio Renato Dall'Ara",
+    "logo": "https://media.api-sports.io/football/teams/500.png"
+  },
+  {
+    "id": 79,
+    "name": "Lille",
+    "founded": 1944,
+    "country": "France",
+    "city": "Villeneuve d&apos;Ascq",
+    "stadium": "Decathlon Arena – Stade Pierre-Mauroy",
+    "logo": "https://media.api-sports.io/football/teams/79.png"
+  },
+  {
+    "id": 80,
+    "name": "Lyon",
+    "founded": 1950,
+    "country": "France",
+    "city": "Décines-Charpieu",
+    "stadium": "Groupama Stadium",
+    "logo": "https://media.api-sports.io/football/teams/80.png"
+  },
+  {
+    "id": 81,
+    "name": "Marseille",
+    "founded": 1899,
+    "country": "France",
+    "city": "Marseille",
+    "stadium": "Stade Orange Vélodrome",
+    "logo": "https://media.api-sports.io/football/teams/81.png"
+  },
+  {
+    "id": 85,
+    "name": "Paris Saint Germain",
+    "founded": 1970,
+    "country": "France",
+    "city": "Paris",
+    "stadium": "Parc des Princes",
+    "logo": "https://media.api-sports.io/football/teams/85.png"
+  },
+  {
+    "id": 91,
+    "name": "Monaco",
+    "founded": 1919,
+    "country": "France",
+    "city": "Monaco",
+    "stadium": "Stade Louis-II",
+    "logo": "https://media.api-sports.io/football/teams/91.png"
+  }
+]
