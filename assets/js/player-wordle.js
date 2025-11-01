@@ -162,6 +162,7 @@ function selectDifficulty(difficulty) {
 
 let targetPlayer = '';
 let targetPlayerData = null; // Store full player object for current game
+let displayPlayerData = null; // Store player data to display in modal (prevents race condition)
 let currentRow = 0;
 let currentTile = 0;
 const maxAttempts = 6;
@@ -198,6 +199,9 @@ function initGame() {
     const randomIndex = Math.floor(Math.random() * filteredPlayers.length);
     targetPlayerData = filteredPlayers[randomIndex];
     targetPlayer = targetPlayerData.lastName;
+    
+    // Store a snapshot for modal display (prevents showing wrong player if initGame is called again)
+    displayPlayerData = { ...targetPlayerData };
     
     console.log(`Selected player: ${targetPlayer} (${currentDifficulty} mode)`);
     
@@ -370,7 +374,7 @@ function colorTiles(row, guess) {
 function endGame(won) {
     gameOver = true;
     
-    // Show modal instead of inline message
+    // Show modal with the player data from when game started (not current targetPlayerData)
     showModal(won, currentDifficulty);
     
     // Keep the old message hidden
@@ -396,17 +400,18 @@ function showModal(won, difficulty) {
     // Update stats display
     updateStatsDisplay(stats, winRate, won);
     
-    // Build player info HTML
+    // Use displayPlayerData (snapshot from game start) instead of targetPlayerData
+    // This prevents showing the wrong player if initGame was called during the game
     let playerInfoHTML = '';
-    if (targetPlayerData) {
+    if (displayPlayerData) {
         playerInfoHTML = `
             <div style="margin: 15px 0;">
-                <img src="${targetPlayerData.photo}" 
-                     alt="${targetPlayerData.lastName}" 
+                <img src="${displayPlayerData.photo}" 
+                     alt="${displayPlayerData.lastName}" 
                      style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #ffd700;"
                      onerror="this.style.display='none'">
                 <div style="font-size: 1.2em; font-weight: bold; color: #1a472a; margin-top: 10px;">
-                    ${targetPlayerData.lastName}
+                    ${displayPlayerData.lastName}
                 </div>
             </div>
         `;
