@@ -575,3 +575,23 @@
     font-weight: 600;
     margin: 0;
 }
+
+/* Invisible input used to trigger mobile keyboards while keeping focus in game */
+.mobile-hidden-input {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 1px;
+    /* Keep opacity 1 for iOS to consider it visible */
+    opacity: 1;
+    background: transparent;
+    color: transparent;
+    caret-color: transparent;
+    border: 0;
+    padding: 0;
+    outline: 0;
+    /* keep it focusable but not in the way */
+    z-index: 1;
+}
