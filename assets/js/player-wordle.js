@@ -220,6 +220,12 @@ function initGame() {
     
     createBoard();
     
+    // Remove focus from any buttons and focus the game board
+    // This prevents Enter key from re-triggering the restart button
+    if (document.activeElement && document.activeElement.tagName === 'BUTTON') {
+        document.activeElement.blur();
+    }
+    
     console.log('Target player:', targetPlayer); // For testing - remove in production
 }
 
