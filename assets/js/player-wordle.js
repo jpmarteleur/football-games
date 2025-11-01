@@ -33,15 +33,6 @@ let currentDifficulty = null;
 let playerPool = [];
 let fullPlayerData = []; // Store full player objects
 let isLoadingPlayers = true;
-let mobileInputEl = null; // hidden input to trigger mobile keyboards
-let useMobileInput = false; // only enabled on touch devices
-const isTouchDevice = (() => {
-    try {
-        return ('ontouchstart' in window) || (navigator.maxTouchPoints || 0) > 0 || (navigator.msMaxTouchPoints || 0) > 0;
-    } catch (_) {
-        return false;
-    }
-})();
 
 // Load players from API (with fallback to JSON)
 async function loadPlayers() {
@@ -233,11 +224,6 @@ function initGame() {
     // This prevents Enter key from re-triggering the restart button
     if (document.activeElement && document.activeElement.tagName === 'BUTTON') {
         document.activeElement.blur();
-    }
-
-    // Ensure hidden input is focused to show mobile keyboard (touch devices only)
-    if (useMobileInput) {
-        setTimeout(focusMobileInput, 0);
     }
     
     console.log('Target player:', targetPlayer); // For testing - remove in production
@@ -464,11 +450,6 @@ function showModal(won, difficulty) {
     }
     
     modal.classList.add('show');
-
-    // Hide mobile keyboard while modal is open
-    if (mobileInputEl && useMobileInput) {
-        mobileInputEl.blur();
-    }
 }
 
 function updateStatsDisplay(stats, winRate, won) {
@@ -507,41 +488,6 @@ function closeModal() {
 function closeModalOnly() {
     const modal = document.getElementById('gameModal');
     modal.classList.remove('show');
-    // Refocus the mobile input so users can continue typing
-    if (useMobileInput) focusMobileInput();
-}
-
-// Focus helper for hidden mobile input
-function focusMobileInput() {
-    if (!mobileInputEl || !useMobileInput) return;
-    const board = document.getElementById('gameBoard');
-    const boardVisible = board && board.style.display !== 'none';
-    if (!gameOver && boardVisible) {
-        try {
-            mobileInputEl.focus({ preventScroll: true });
-        } catch (_) {
-            // Fallback focus without options
-            mobileInputEl.focus();
-        }
-    }
-}
-
-// Handle text input from mobile keyboards
-function handleMobileTextInput(e) {
-    if (gameOver) {
-        // If game over, clear any stray value and ignore
-        if (mobileInputEl) mobileInputEl.value = '';
-        return;
-    }
-    const val = (e.target.value || '').toUpperCase();
-    for (let i = 0; i < val.length; i++) {
-        const ch = val[i];
-        if (ch >= 'A' && ch <= 'Z') {
-            addLetter(ch);
-        }
-    }
-    // Reset input so next keystroke triggers input event again
-    e.target.value = '';
 }
 
 // Event listeners - Wait for DOM to load
@@ -572,45 +518,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedDifficulty = loadSavedDifficulty();
     if (savedDifficulty) {
         currentDifficulty = savedDifficulty;
-    }
-
-    // Setup hidden input for mobile typing (touch devices only)
-    if (isTouchDevice) {
-        useMobileInput = true;
-        mobileInputEl = document.getElementById('mobileTextInput');
-        if (mobileInputEl) {
-            mobileInputEl.value = '';
-            mobileInputEl.addEventListener('input', handleMobileTextInput);
-            // Handle Enter and Backspace explicitly (some mobiles send these via keydown)
-            mobileInputEl.addEventListener('keydown', (e) => {
-                const key = e.key;
-                if (key === 'Enter') {
-                    e.preventDefault();
-                    submitGuess();
-                } else if (key === 'Backspace') {
-                    // We keep input cleared, so always handle ourselves
-                    e.preventDefault();
-                    deleteLetter();
-                }
-            });
-
-            // Tap anywhere on the board/container to bring up the keyboard
-            const board = document.getElementById('gameBoard');
-            if (board) {
-                board.addEventListener('pointerdown', focusMobileInput);
-                board.addEventListener('touchstart', focusMobileInput, { passive: true });
-                board.addEventListener('click', focusMobileInput);
-            }
-
-            const container = document.querySelector('.container');
-            if (container) {
-                container.addEventListener('pointerdown', focusMobileInput);
-                container.addEventListener('touchstart', focusMobileInput, { passive: true });
-                container.addEventListener('click', focusMobileInput);
-            }
-        }
-    } else {
-        useMobileInput = false;
     }
 });
 
