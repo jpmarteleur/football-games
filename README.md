@@ -24,9 +24,9 @@ The website is made with basic **HTML, CSS, and JavaScript**, and runs directly 
 
 ## 🚀 Try It Out
 
-1. Clone or download the repository  
-2. Open `index.html` in your browser  
-3. Play and have fun!
+Follow the link https://jpmarteleur.github.io/football-games/
+
+If you encounter any bugs or have feature suggestions, please open an issue or submit a pull request. Contributions and feedback are always welcome!
 
 ---
 
