@@ -67,6 +67,19 @@
             <p>Type to fill the row, press ENTER to submit, BACKSPACE to delete</p>
         </div>
 
+        <!-- Hidden, focusable input to trigger mobile keyboards -->
+        <input
+            id="mobileTextInput"
+            class="mobile-hidden-input"
+            type="text"
+            inputmode="text"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            aria-hidden="true"
+        />
+
         <div class="message" id="message"></div>
         <div class="game-buttons" id="gameButtons" style="display: none;">
             <button class="play-again-btn" id="playAgain">🔄 Restart</button>

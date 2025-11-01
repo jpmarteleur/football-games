@@ -33,6 +33,7 @@ let currentDifficulty = null;
 let playerPool = [];
 let fullPlayerData = []; // Store full player objects
 let isLoadingPlayers = true;
+let mobileInputEl = null; // hidden input to trigger mobile keyboards
 
 // Load players from API (with fallback to JSON)
 async function loadPlayers() {
@@ -225,6 +226,9 @@ function initGame() {
     if (document.activeElement && document.activeElement.tagName === 'BUTTON') {
         document.activeElement.blur();
     }
+
+    // Ensure hidden input is focused to show mobile keyboard
+    focusMobileInput();
     
     console.log('Target player:', targetPlayer); // For testing - remove in production
 }
@@ -448,6 +452,11 @@ function showModal(won, difficulty) {
     }
     
     modal.classList.add('show');
+
+    // Hide mobile keyboard while modal is open
+    if (mobileInputEl) {
+        mobileInputEl.blur();
+    }
 }
 
 function updateStatsDisplay(stats, winRate, won) {
@@ -486,6 +495,41 @@ function closeModal() {
 function closeModalOnly() {
     const modal = document.getElementById('gameModal');
     modal.classList.remove('show');
+    // Refocus the mobile input so users can continue typing
+    focusMobileInput();
+}
+
+// Focus helper for hidden mobile input
+function focusMobileInput() {
+    if (!mobileInputEl) return;
+    const board = document.getElementById('gameBoard');
+    const boardVisible = board && board.style.display !== 'none';
+    if (!gameOver && boardVisible) {
+        try {
+            mobileInputEl.focus({ preventScroll: true });
+        } catch (_) {
+            // Fallback focus without options
+            mobileInputEl.focus();
+        }
+    }
+}
+
+// Handle text input from mobile keyboards
+function handleMobileTextInput(e) {
+    if (gameOver) {
+        // If game over, clear any stray value and ignore
+        if (mobileInputEl) mobileInputEl.value = '';
+        return;
+    }
+    const val = (e.target.value || '').toUpperCase();
+    for (let i = 0; i < val.length; i++) {
+        const ch = val[i];
+        if (ch >= 'A' && ch <= 'Z') {
+            addLetter(ch);
+        }
+    }
+    // Reset input so next keystroke triggers input event again
+    e.target.value = '';
 }
 
 // Event listeners - Wait for DOM to load
@@ -516,6 +560,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedDifficulty = loadSavedDifficulty();
     if (savedDifficulty) {
         currentDifficulty = savedDifficulty;
+    }
+
+    // Setup hidden input for mobile typing
+    mobileInputEl = document.getElementById('mobileTextInput');
+    if (mobileInputEl) {
+        mobileInputEl.value = '';
+        mobileInputEl.addEventListener('input', handleMobileTextInput);
+        // Handle Enter and Backspace explicitly (some mobiles send these via keydown)
+        mobileInputEl.addEventListener('keydown', (e) => {
+            const key = e.key;
+            if (key === 'Enter') {
+                e.preventDefault();
+                submitGuess();
+            } else if (key === 'Backspace') {
+                // Allow native deletion only when the hidden input has value; otherwise route to game
+                // We keep input cleared, so always handle ourselves
+                e.preventDefault();
+                deleteLetter();
+            }
+        });
+
+        // Click/tap anywhere on the board area to refocus the input
+        const board = document.getElementById('gameBoard');
+        if (board) {
+            board.addEventListener('click', focusMobileInput);
+            board.addEventListener('touchend', focusMobileInput, { passive: true });
+        }
+
+        // Also refocus when the user taps the hints or container
+        const container = document.querySelector('.container');
+        if (container) {
+            container.addEventListener('click', focusMobileInput);
+            container.addEventListener('touchend', focusMobileInput, { passive: true });
+        }
     }
 });
 
