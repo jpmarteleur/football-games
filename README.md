@@ -26,7 +26,7 @@ The website is made with basic **HTML, CSS, and JavaScript**, and runs directly 
 
 Follow the link https://jpmarteleur.github.io/football-games/
 
-For any bug report or reccomendations of features to add, feel free to reach out to me!
+If you encounter any bugs or have feature suggestions, please open an issue or submit a pull request. Contributions and feedback are always welcome!
 
 ---
 
