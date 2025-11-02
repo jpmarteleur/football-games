@@ -14,7 +14,7 @@
     },
     {
       "id": 22224,
-      "lastName": "MAGALHES",
+      "lastName": "MAGALHAES",
       "age": 28,
       "nationality": "Brazil",
       "photo": "https://media.api-sports.io/football/players/22224.png",
@@ -32,7 +32,7 @@
     },
     {
       "id": 290,
-      "lastName": "DIJK",
+      "lastName": "VANDIJK",
       "age": 34,
       "nationality": "Netherlands",
       "photo": "https://media.api-sports.io/football/players/290.png",
@@ -86,7 +86,7 @@
     },
     {
       "id": 1145,
-      "lastName": "KONAT",
+      "lastName": "KONATE",
       "age": 26,
       "nationality": "France",
       "photo": "https://media.api-sports.io/football/players/1145.png",
@@ -113,7 +113,7 @@
     },
     {
       "id": 278,
-      "lastName": "MBAPP",
+      "lastName": "MBAPPE",
       "age": 27,
       "nationality": "France",
       "photo": "https://media.api-sports.io/football/players/278.png",
@@ -203,7 +203,7 @@
     },
     {
       "id": 1271,
-      "lastName": "TCHOUAMNI",
+      "lastName": "TCHOUAMENI",
       "age": 25,
       "nationality": "France",
       "photo": "https://media.api-sports.io/football/players/1271.png",
@@ -536,7 +536,7 @@
     },
     {
       "id": 889,
-      "lastName": "LINDELF",
+      "lastName": "LINDELOF",
       "age": 31,
       "nationality": "Sweden",
       "photo": "https://media.api-sports.io/football/players/889.png",
@@ -596,6 +596,42 @@
       "photo": "https://media.api-sports.io/football/players/19192.png",
       "team": "Aston Villa",
       "position": "Midfielder"
+    },
+    {
+      "id": 154,
+      "lastName": "MESSI",
+      "age": 38,
+      "nationality": "Argentina",
+      "photo": "https://media.api-sports.io/football/players/154.png",
+      "team": "Inter Miami",
+      "position": "Forward"
+    },
+    {
+      "id": 157,
+      "lastName": "SUAREZ",
+      "age": 38,
+      "nationality": "Uruguay",
+      "photo": "https://media.api-sports.io/football/players/157.png",
+      "team": "Inter Miami",
+      "position": "Forward"
+    },
+    {
+      "id": 12339,
+      "lastName": "NUNEZ",
+      "age": 25,
+      "nationality": "Uruguay",
+      "photo": "https://media.api-sports.io/football/players/12339.png",
+      "team": "Al Hilal",
+      "position": "Forward"
+    },
+    {
+      "id": 449249,
+      "lastName": "MASTANTUONO",
+      "age": 18,
+      "nationality": "Argentina",
+      "photo": "https://media.api-sports.io/football/players/449249.png",
+      "team": "Real Madrid",
+      "position": "Forward"
     }
   ]
 }
