@@ -268,5 +268,50 @@
     "city": "Monaco",
     "stadium": "Stade Louis-II",
     "logo": "https://media.api-sports.io/football/teams/91.png"
+  },
+  {
+    "id": 2356,
+    "name": "Nacional",
+    "founded": 1899,
+    "country": "Uruguay",
+    "city": "Montevideo",
+    "stadium": "Estadio Gran Parque Central",
+    "logo": "https://media.api-sports.io/football/teams/2356.png"
+  },
+  {
+    "id": 2348,
+    "name": "Penarol",
+    "founded": 1891,
+    "country": "Uruguay",
+    "city": "Montevideo",
+    "stadium": "Estadio Campeón del Siglo",
+    "logo": "https://media.api-sports.io/football/teams/2348.png"
+  },
+  {
+    "id": 2350,
+    "name": "Defensor Sporting",
+    "founded": 1913,
+    "country": "Uruguay",
+    "city": "Montevideo",
+    "stadium": "Estadio Luis Franzini",
+    "logo": "https://media.api-sports.io/football/teams/2350.png"
+  },
+  {
+    "id": 451,
+    "name": "Boca Juniors",
+    "founded": 1905,
+    "country": "Argentina",
+    "city": "Buenos Aires",
+    "stadium": "Estadio Alberto J. Armando",
+    "logo": "https://media.api-sports.io/football/teams/451.png"
+  },
+  {
+    "id": 435,
+    "name": "River Plate",
+    "founded": 1901,
+    "country": "Argentina",
+    "city": "Buenos Aires",
+    "stadium": "Estadio Mas Monumental",
+    "logo": "https://media.api-sports.io/football/teams/435.png"
   }
 ]
