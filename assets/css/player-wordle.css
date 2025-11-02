@@ -484,25 +484,26 @@
 .game-board {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: var(--gap, 5px);
     margin-bottom: 20px;
     align-items: center;
+    width: 100%;
 }
 
 .board-row {
     display: flex;
-    gap: 5px;
+    gap: var(--gap, 5px);
 }
 
 /* Tiles */
 .tile {
-    width: 50px;
-    height: 50px;
+    width: var(--tile-size, 50px);
+    height: var(--tile-size, 50px);
     border: 2px solid #2d5a3d;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8em;
+    font-size: calc(var(--tile-size, 50px) * 0.5);
     font-weight: 900;
     text-transform: uppercase;
     border-radius: 4px;

@@ -260,6 +260,15 @@ function createBoard() {
         
         board.appendChild(rowDiv);
     }
+
+    // After laying out the board, size tiles to fit available width
+    sizeBoardTiles();
+    // Recalculate once after paint to ensure correct width on some mobile browsers
+    try {
+        requestAnimationFrame(() => requestAnimationFrame(sizeBoardTiles));
+    } catch (_) {
+        setTimeout(sizeBoardTiles, 50);
+    }
 }
 
 // Update tile display
@@ -605,6 +614,37 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    // Recompute tile sizes on window resize
+    window.addEventListener('resize', sizeBoardTiles);
 });
 
 // Players will load automatically via loadPlayers() call above
+
+// Dynamically size tiles so each row fits the card/container width
+function sizeBoardTiles() {
+    const board = document.getElementById('gameBoard');
+    if (!board || board.style.display === 'none') return;
+
+    // Number of columns equals target player name length
+    const cols = (typeof targetPlayer === 'string' && targetPlayer.length) ? targetPlayer.length : 0;
+    if (!cols) return;
+
+    // Current gap in px (match CSS default 5px)
+    const gap = 5;
+    // Available width inside the board
+    const containerWidth = Math.floor(board.clientWidth || 0);
+    if (!containerWidth) return;
+
+    // Compute ideal tile size to fit exactly with gaps
+    let tile = Math.floor((containerWidth - gap * (cols - 1)) / cols);
+
+    // Clamp for usability across devices
+    const minTile = 28; // readable minimum on small phones
+    const maxTile = 76; // pleasant upper bound on desktop
+    tile = Math.max(minTile, Math.min(tile, maxTile));
+
+    // Apply to CSS variables
+    board.style.setProperty('--tile-size', tile + 'px');
+    board.style.setProperty('--gap', gap + 'px');
+}
