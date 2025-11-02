@@ -598,6 +598,59 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
+            // Keep the board visible when the virtual keyboard opens (no smooth scroll to avoid loops)
+            let ensureTicking = false;
+            const ensureBoardVisible = () => {
+                if (ensureTicking) return;
+                ensureTicking = true;
+                try {
+                    requestAnimationFrame(() => {
+                        const board = document.getElementById('gameBoard');
+                        if (!board || board.style.display === 'none' || gameOver) {
+                            ensureTicking = false;
+                            return;
+                        }
+                        // Only act if the hidden input has focus
+                        if (document.activeElement !== mobileInputEl) {
+                            ensureTicking = false;
+                            return;
+                        }
+
+                        const scrollEl = document.scrollingElement || document.documentElement;
+                        const rect = board.getBoundingClientRect();
+                        const vv = window.visualViewport;
+                        const vpH = vv ? vv.height : window.innerHeight || rect.bottom; 
+                        // Allow a bit of padding around the board
+                        const padding = 16;
+
+                        // Compute minimal delta to bring the board fully into view
+                        let delta = 0;
+                        if (rect.top < padding) {
+                            delta = rect.top - padding; // negative moves up
+                        } else if (rect.bottom > vpH - padding) {
+                            delta = rect.bottom - (vpH - padding); // positive moves down
+                        }
+
+                        if (delta !== 0) {
+                            try {
+                                scrollEl.scrollBy({ top: delta, behavior: 'auto' });
+                            } catch (_) {
+                                scrollEl.scrollTop += delta;
+                            }
+                        }
+                        ensureTicking = false;
+                    });
+                } catch (_) {
+                    ensureTicking = false;
+                }
+            };
+            mobileInputEl.addEventListener('focus', ensureBoardVisible, { passive: true });
+            const vv = window.visualViewport;
+            if (vv) {
+                vv.addEventListener('resize', ensureBoardVisible);
+                // Avoid listening to vv.scroll to prevent feedback loops on some browsers
+            }
+
             // Tap anywhere on the board/container to bring up the keyboard
             const board = document.getElementById('gameBoard');
             if (board) {
