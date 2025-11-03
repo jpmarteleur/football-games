@@ -82,7 +82,6 @@ function initGame() {
     renderGame();
     updateCluesDisplay();
     updateAttemptsDisplay();
-    clearGuessHistory();
     
     // Focus input
     document.getElementById('guessInput').focus();
@@ -129,12 +128,6 @@ function renderGame() {
                 <button class="submit-btn" id="submitBtn">
                     Submit Guess
                 </button>
-            </div>
-
-            <!-- Guess History -->
-            <div class="history-container" id="historyContainer" style="display: none;">
-                <h3 class="history-title">📝 Previous Guesses</h3>
-                <div class="guess-history" id="guessHistory"></div>
             </div>
         </div>
     `;
@@ -225,7 +218,12 @@ function handleGuess() {
         gameOver = true;
         setTimeout(() => showGameOver(true), 500);
     } else {
-        // Wrong guess
+        // Wrong guess - show error animation
+        input.classList.add('error');
+        setTimeout(() => {
+            input.classList.remove('error');
+        }, 500);
+        
         if (attemptsUsed >= MAX_ATTEMPTS) {
             // Lost - all attempts used
             gameOver = true;
@@ -244,33 +242,9 @@ function handleGuess() {
     input.focus();
 }
 
-// Add guess to history
+// Add guess to history (keeping track internally but not displaying)
 function addGuessToHistory(guess) {
     guessHistory.push(guess);
-
-    const historyContainer = document.getElementById('historyContainer');
-    const guessHistoryDiv = document.getElementById('guessHistory');
-
-    // Show history container
-    historyContainer.style.display = 'block';
-
-    // Add guess item
-    const guessItem = document.createElement('div');
-    guessItem.className = 'guess-item';
-    guessItem.innerHTML = `
-        <div class="guess-number">${guessHistory.length}</div>
-        <div class="guess-text">${guess}</div>
-    `;
-    guessHistoryDiv.appendChild(guessItem);
-}
-
-// Clear guess history
-function clearGuessHistory() {
-    const historyContainer = document.getElementById('historyContainer');
-    const guessHistoryDiv = document.getElementById('guessHistory');
-    
-    historyContainer.style.display = 'none';
-    guessHistoryDiv.innerHTML = '';
 }
 
 // Show game over overlay
