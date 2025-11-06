@@ -1,20 +1,30 @@
 /* CSS Variables - Colors and Spacing */
 :root {
-  /* Football-themed Colors */
-  --grass-green: #2d5016;
-  --pitch-green: #4a7c2e;
-  --field-light: #5a9d3a;
-  --accent-yellow: #ffd700;
-  --accent-gold: #f0a500;
-  --card-red: #e63946;
-  --card-dark: #1a3009;
-  --whistle-silver: #c0c0c0;
+  /* Sunset Orange Palette */
+  --grass-green: #f97316;
+  --pitch-green: #fb923c;
+  --field-light: #fdba74;
+  --accent-yellow: #fca451;
+  --accent-gold: #f97316;
+  --card-red: #ff6b3d;
+  --card-dark: #231c16;
+  --whistle-silver: #f5d0b5;
+
+  /* Glassmorphism additions */
+  --card-background: rgba(35, 28, 22, 0.5);
+  --card-border: rgba(249, 115, 22, 0.2);
+  --card-shadow: 0 8px 32px rgba(249, 115, 22, 0.2);
+  --card-shadow-hover: 0 12px 40px rgba(249, 115, 22, 0.3);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --glow-strong: rgba(249, 115, 22, 0.3);
+  --glow-soft: rgba(249, 115, 22, 0.2);
   
   /* Legacy support */
-  --color-primary: #4a7c2e;
-  --color-primary-dark: #2d5016;
-  --color-accent: #ffd700;
-  --color-accent-dark: #f0a500;
+  --color-primary: #f97316;
+  --color-primary-dark: #b45309;
+  --color-accent: #fb923c;
+  --color-accent-dark: #ea580c;
   
   /* Spacing */
   --spacing-sm: 0.5rem;

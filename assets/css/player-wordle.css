@@ -5,9 +5,13 @@
     text-align: center;
     margin-bottom: 20px;
     padding: 20px 15px;
-    background: linear-gradient(135deg, rgba(26, 71, 42, 0.03) 0%, rgba(45, 90, 61, 0.05) 100%);
+    background: rgba(35, 28, 22, 0.45);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
     border-radius: 15px;
     animation: fadeInScale 0.6s ease;
+    border: 1px solid rgba(249, 115, 22, 0.2);
+    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.18);
 }
 
 @keyframes fadeInScale {
@@ -23,7 +27,7 @@
 
 .difficulty-title {
     font-size: 1.4em;
-    color: #1a472a;
+    color: var(--text-primary);
     margin-bottom: 5px;
     font-weight: 800;
     text-transform: uppercase;
@@ -32,7 +36,7 @@
 
 .difficulty-subtitle {
     font-size: 0.9em;
-    color: #2d5a3d;
+    color: var(--text-secondary);
     margin-bottom: 20px;
     font-weight: 500;
     opacity: 0.85;
@@ -48,16 +52,19 @@
 }
 
 .difficulty-card {
-    background: white;
-    border: 3px solid transparent;
+    background: rgba(35, 28, 22, 0.55);
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(249, 115, 22, 0.2);
     border-radius: 12px;
     padding: 15px 12px;
     width: 150px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.22);
     position: relative;
     overflow: hidden;
+    color: var(--text-primary);
 }
 
 .difficulty-card::before {
@@ -79,27 +86,27 @@
 }
 
 .difficulty-card:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 14px 40px rgba(249, 115, 22, 0.3);
 }
 
 .difficulty-card:active {
-    transform: translateY(-5px) scale(1.01);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 12px 28px rgba(249, 115, 22, 0.24);
 }
 
 .difficulty-card.easy {
-    border-color: #4ade80;
+    border-color: rgba(251, 191, 120, 0.5);
 }
 
 .difficulty-card.easy::before {
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    background: linear-gradient(135deg, rgba(255, 186, 133, 0.35) 0%, rgba(253, 214, 173, 0.25) 100%);
 }
 
 .difficulty-card.easy:hover {
-    border-color: #22c55e;
-    box-shadow: 0 20px 50px rgba(34, 197, 94, 0.4),
-                0 0 30px rgba(34, 197, 94, 0.2);
+    border-color: rgba(251, 191, 120, 0.75);
+    box-shadow: 0 18px 48px rgba(251, 191, 120, 0.45),
+                0 0 30px rgba(251, 191, 120, 0.25);
 }
 
 .difficulty-card.easy:hover::before {
@@ -107,17 +114,17 @@
 }
 
 .difficulty-card.medium {
-    border-color: #fbbf24;
+    border-color: rgba(249, 115, 22, 0.55);
 }
 
 .difficulty-card.medium::before {
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.35) 0%, rgba(251, 146, 60, 0.25) 100%);
 }
 
 .difficulty-card.medium:hover {
-    border-color: #f59e0b;
-    box-shadow: 0 20px 50px rgba(245, 158, 11, 0.4),
-                0 0 30px rgba(245, 158, 11, 0.2);
+    border-color: rgba(249, 115, 22, 0.8);
+    box-shadow: 0 18px 48px rgba(249, 115, 22, 0.45),
+                0 0 30px rgba(249, 115, 22, 0.25);
 }
 
 .difficulty-card.medium:hover::before {
@@ -125,17 +132,17 @@
 }
 
 .difficulty-card.hard {
-    border-color: #ef4444;
+    border-color: rgba(208, 65, 0, 0.6);
 }
 
 .difficulty-card.hard::before {
-    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    background: linear-gradient(135deg, rgba(229, 80, 16, 0.38) 0%, rgba(189, 54, 0, 0.28) 100%);
 }
 
 .difficulty-card.hard:hover {
-    border-color: #dc2626;
-    box-shadow: 0 20px 50px rgba(220, 38, 38, 0.4),
-                0 0 30px rgba(220, 38, 38, 0.2);
+    border-color: rgba(208, 65, 0, 0.85);
+    box-shadow: 0 18px 48px rgba(208, 65, 0, 0.45),
+                0 0 30px rgba(208, 65, 0, 0.25);
 }
 
 .difficulty-card.hard:hover::before {
@@ -181,7 +188,7 @@
     font-size: 1.1em;
     font-weight: 900;
     margin-bottom: 10px;
-    color: #1a472a;
+    color: var(--text-primary);
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
@@ -190,27 +197,27 @@
     text-align: left;
     margin-top: 10px;
     padding: 10px 8px;
-    background: rgba(26, 71, 42, 0.03);
+    background: rgba(35, 28, 22, 0.45);
     border-radius: 8px;
     border-left: 3px solid currentColor;
 }
 
 .difficulty-card.easy .difficulty-features {
-    border-left-color: #22c55e;
+    border-left-color: rgba(251, 191, 120, 0.75);
 }
 
 .difficulty-card.medium .difficulty-features {
-    border-left-color: #f59e0b;
+    border-left-color: rgba(249, 115, 22, 0.85);
 }
 
 .difficulty-card.hard .difficulty-features {
-    border-left-color: #dc2626;
+    border-left-color: rgba(208, 65, 0, 0.85);
 }
 
 .difficulty-features p {
     font-size: 0.78em;
     margin: 6px 0;
-    color: #1a472a;
+    color: rgba(255, 255, 255, 0.85);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -227,15 +234,15 @@
 }
 
 .difficulty-card.easy .difficulty-features p::before {
-    background: #22c55e;
+    background: rgba(251, 191, 120, 0.9);
 }
 
 .difficulty-card.medium .difficulty-features p::before {
-    background: #f59e0b;
+    background: rgba(249, 115, 22, 0.95);
 }
 
 .difficulty-card.hard .difficulty-features p::before {
-    background: #dc2626;
+    background: rgba(208, 65, 0, 0.95);
 }
 
 /* Add selection pulse effect */
@@ -291,7 +298,7 @@
     margin-bottom: 12px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 22px rgba(249, 115, 22, 0.24);
     animation: slideIn 0.5s ease;
 }
 
@@ -307,47 +314,48 @@
 }
 
 .difficulty-indicator.easy {
-    background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(253, 213, 173, 0.85) 0%, rgba(251, 191, 120, 0.85) 100%);
+    color: #2b1509;
+    text-shadow: none;
 }
 
 .difficulty-indicator.medium {
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.9) 0%, rgba(251, 146, 60, 0.9) 100%);
+    color: #fff3e8;
+    text-shadow: 0 2px 6px rgba(249, 115, 22, 0.4);
 }
 
 .difficulty-indicator.hard {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(208, 65, 0, 0.92) 0%, rgba(155, 41, 0, 0.92) 100%);
+    color: #fff1e8;
+    text-shadow: 0 2px 6px rgba(208, 65, 0, 0.4);
 }
 
 /* Game Hints Display */
 .game-hints {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%);
+    background: rgba(35, 28, 22, 0.55);
     padding: 12px 18px;
     border-radius: 12px;
     margin-bottom: 12px;
     font-size: 0.95em;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(249, 115, 22, 0.25);
     animation: slideIn 0.6s ease 0.2s both;
 }
 
 .game-hints p {
     margin: 6px 0;
-    color: white;
+    color: var(--text-primary);
     font-weight: 700;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    text-shadow: none;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
 .game-hints .hint-label {
-    color: #ffd700;
+    color: #f97316;
     font-weight: 800;
     text-transform: uppercase;
     font-size: 0.85em;
@@ -365,16 +373,16 @@
 
 /* Play Again Button */
 .play-again-btn {
-    background: linear-gradient(135deg, #2d8f3d 0%, #1a6b2a 100%);
-    color: white;
-    border: none;
+    background: rgba(249, 115, 22, 0.2);
+    color: #ffffff;
+    border: 1px solid rgba(249, 115, 22, 0.35);
     padding: 14px 28px;
     font-size: 1em;
     font-weight: 800;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 32px rgba(249, 115, 22, 0.3);
     text-transform: uppercase;
     letter-spacing: 1px;
     position: relative;
@@ -389,7 +397,7 @@
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(249, 115, 22, 0.25);
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
 }
@@ -400,28 +408,28 @@
 }
 
 .play-again-btn:hover {
-    background: linear-gradient(135deg, #1a6b2a 0%, #0f4d1d 100%);
+    background: rgba(249, 115, 22, 0.3);
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 16px 40px rgba(249, 115, 22, 0.35);
 }
 
 .play-again-btn:active {
     transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 24px rgba(249, 115, 22, 0.25);
 }
 
 /* Change Difficulty Button */
 .change-difficulty {
-    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-    color: white;
-    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+    border: 1px solid rgba(249, 115, 22, 0.25);
     padding: 14px 28px;
     font-size: 1em;
     font-weight: 800;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 26px rgba(249, 115, 22, 0.24);
     text-transform: uppercase;
     letter-spacing: 1px;
     position: relative;
@@ -436,7 +444,7 @@
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(249, 115, 22, 0.2);
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
 }
@@ -447,37 +455,40 @@
 }
 
 .change-difficulty:hover {
-    background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+    background: rgba(255, 255, 255, 0.12);
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 14px 34px rgba(249, 115, 22, 0.3);
 }
 
 .change-difficulty:active {
     transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 9px 22px rgba(249, 115, 22, 0.2);
 }
 
 /* Game Info Box */
 .game-info {
-    background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+    background: rgba(35, 28, 22, 0.55);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
     padding: 12px;
     border-radius: 10px;
     margin-bottom: 20px;
     text-align: center;
-    color: white;
-    box-shadow: 0 4px 15px rgba(26, 71, 42, 0.3);
+    color: var(--text-primary);
+    border: 1px solid rgba(249, 115, 22, 0.25);
+    box-shadow: 0 12px 32px rgba(249, 115, 22, 0.22);
 }
 
 .attempts {
     font-weight: bold;
-    color: #ffd700;
+    color: #f97316;
     font-size: 1.1em;
 }
 
 .target-length {
     margin-top: 6px;
     font-size: 0.85em;
-    color: #a8d5a8;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 /* Wordle Grid */
@@ -499,7 +510,7 @@
 .tile {
     width: var(--tile-size, 50px);
     height: var(--tile-size, 50px);
-    border: 2px solid #2d5a3d;
+    border: 2px solid rgba(249, 115, 22, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -507,12 +518,13 @@
     font-weight: 900;
     text-transform: uppercase;
     border-radius: 4px;
-    background: white;
+    background: rgba(35, 28, 22, 0.55);
+    color: var(--text-primary);
     transition: all 0.3s ease;
 }
 
 .tile.current {
-    border-color: #ffd700;
+    border-color: rgba(249, 115, 22, 0.7);
     border-width: 3px;
     animation: pulse 1s infinite;
 }
@@ -544,21 +556,23 @@
 
 /* Tile States */
 .tile.correct {
-    background: linear-gradient(135deg, #2d8f3d 0%, #1a6b2a 100%);
-    color: white;
-    border-color: #1a6b2a;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.9) 0%, rgba(22, 163, 74, 0.9) 100%);
+    color: #052e16;
+    border-color: rgba(22, 163, 74, 0.95);
+    box-shadow: 0 10px 24px rgba(34, 197, 94, 0.35);
 }
 
 .tile.present {
-    background: linear-gradient(135deg, #ffd700 0%, #f0a500 100%);
-    color: #1a472a;
-    border-color: #f0a500;
+    background: linear-gradient(135deg, rgba(250, 204, 21, 0.92) 0%, rgba(234, 179, 8, 0.92) 100%);
+    color: #3f2f03;
+    border-color: rgba(202, 138, 4, 0.95);
+    box-shadow: 0 8px 20px rgba(250, 204, 21, 0.32);
 }
 
 .tile.absent {
-    background: linear-gradient(135deg, #5a5a5a 0%, #3d3d3d 100%);
-    color: white;
-    border-color: #3d3d3d;
+    background: linear-gradient(135deg, rgba(48, 37, 30, 0.9) 0%, rgba(28, 20, 16, 0.9) 100%);
+    color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(64, 47, 38, 0.8);
 }
 
 /* Keyboard Info */
@@ -566,15 +580,29 @@
     text-align: center;
     margin-bottom: 15px;
     padding: 10px;
-    background: rgba(26, 71, 42, 0.1);
+    background: rgba(35, 28, 22, 0.45);
     border-radius: 8px;
+    border: 1px solid rgba(249, 115, 22, 0.18);
 }
 
 .keyboard-info p {
     font-size: 0.85em;
-    color: #2d5a3d;
+    color: var(--text-secondary);
     font-weight: 600;
     margin: 0;
+}
+
+/* Improve readability for player name inside the modal */
+#modalMessage div[style*="font-size: 1.2em"] {
+    color: #ffe8d1 !important;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+    font-size: 1em !important;
+}
+
+#modalMessage img {
+    width: 72px !important;
+    height: 72px !important;
+    border-width: 2px !important;
 }
 
 /* Invisible input used to trigger mobile keyboards while keeping focus in game */

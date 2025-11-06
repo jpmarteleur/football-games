@@ -447,16 +447,12 @@ function showModal(won, difficulty) {
         `;
     }
     
-    const difficultySettings = DIFFICULTY_SETTINGS[difficulty];
-    const difficultyBadge = `<span style="background: ${difficulty === 'easy' ? '#4ade80' : difficulty === 'medium' ? '#fbbf24' : '#ef4444'}; padding: 4px 12px; border-radius: 15px; font-size: 0.85em; font-weight: 700;">${difficultySettings.emoji} ${difficultySettings.label}</span>`;
-    
     if (won) {
         const attemptNumber = currentRow + 1;
         title.textContent = 'GOAL!';
         title.className = 'modal-title win';
         message.innerHTML = `
             You guessed in <strong>${attemptNumber}</strong> ${attemptNumber === 1 ? 'attempt' : 'attempts'}!
-            <div style="margin-top: 10px;">${difficultyBadge}</div>
             ${playerInfoHTML}
             <div style="margin-top: 10px;">Amazing work! 🏆</div>
         `;
@@ -465,7 +461,6 @@ function showModal(won, difficulty) {
         title.className = 'modal-title lose';
         message.innerHTML = `
             The player was:
-            <div style="margin-top: 10px;">${difficultyBadge}</div>
             ${playerInfoHTML}
             <div style="margin-top: 10px;">Better luck next time! 💪</div>
         `;
