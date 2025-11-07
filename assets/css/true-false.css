@@ -1,0 +1,288 @@
+/* True or False Game Styles */
+
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Loading State */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    gap: 1rem;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--accent-secondary);
+    border-top: 4px solid var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Streak Display */
+.streak-display {
+    background: var(--card-background);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.streak-icon {
+    font-size: 2.5rem;
+}
+
+.streak-text {
+    flex: 1;
+}
+
+.current-streak {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+}
+
+.current-streak span {
+    font-size: 1.5rem;
+}
+
+.best-streak {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.best-streak span {
+    color: var(--accent-secondary);
+    font-weight: bold;
+}
+
+/* Question Card */
+.question-card {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.question-number {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.question-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: center;
+    line-height: 1.4;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Answer Buttons */
+.answer-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.answer-btn {
+    flex: 1;
+    max-width: 200px;
+    padding: 1.2rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 3px solid #333;
+    border-radius: 12px;
+    background: white;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+}
+
+/* Disable global button ripple/shine effect for these specific buttons */
+.answer-btn::before,
+.answer-btn:hover::before {
+    content: none !important;
+}
+
+.answer-btn:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.answer-btn:focus {
+    outline: none;
+}
+
+.answer-btn.true-btn:hover {
+    background: #22c55e;
+    color: white;
+    border-color: #22c55e;
+}
+
+.answer-btn.false-btn:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+
+.answer-btn:active {
+    transform: translateY(0);
+}
+
+.answer-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.answer-btn.correct {
+    background: #22c55e;
+    color: white;
+    border-color: #22c55e;
+    animation: correctPulse 0.5s ease;
+}
+
+.answer-btn.incorrect {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+    animation: shake 0.5s ease;
+}
+
+@keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* Game Over Modal Content */
+.game-over-content {
+    text-align: center;
+}
+
+.game-over-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--accent-primary);
+}
+
+.streak-result {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--accent-primary);
+    margin: 1.5rem 0;
+}
+
+.streak-label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.best-streak-badge {
+    display: inline-block;
+    background: var(--accent-secondary);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.fun-message {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin: 1.5rem 0;
+    font-style: italic;
+}
+
+.play-again-btn {
+    margin-top: 2rem;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.play-again-btn:hover {
+    background: var(--accent-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 1rem;
+    }
+
+    .question-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .question-text {
+        font-size: 1.2rem;
+        min-height: 80px;
+    }
+
+    .answer-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .answer-btn {
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    .streak-display {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .streak-icon {
+        font-size: 2rem;
+    }
+}
