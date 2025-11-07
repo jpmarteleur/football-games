@@ -113,6 +113,11 @@ function showDifficultySelector() {
     document.getElementById('gameBoard').style.display = 'none';
     document.getElementById('keyboardInfo').style.display = 'none';
     document.getElementById('gameButtons').style.display = 'none';
+    
+    // Remove 'selecting' class from all difficulty cards to allow re-selection
+    document.querySelectorAll('.difficulty-card').forEach(card => {
+        card.classList.remove('selecting');
+    });
 }
 
 function hideDifficultySelector() {
