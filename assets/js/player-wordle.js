@@ -170,7 +170,7 @@ function selectDifficulty(difficulty) {
         setTimeout(() => {
             hideDifficultySelector();
             initGame();
-        }, 600);
+        }, 120);
     } else {
         hideDifficultySelector();
         initGame();
