@@ -1,314 +1,535 @@
 // Club Guesser Game Logic
+class ClubGuesserGame {
+    constructor() {
+        this.teamsData = [];
+        this.currentTeam = null;
+        this.currentClueIndex = 0;
+        this.attemptsUsed = 0;
+        this.MAX_ATTEMPTS = 6;
+        this.gameOver = false;
+        this.guessHistory = [];
+        this.DEBUG = false; // Set to true for development
 
-let teamsData = [];
-let currentTeam = null;
-let currentClueIndex = 0;
-let attemptsUsed = 0;
-const MAX_ATTEMPTS = 6;
-let gameOver = false;
-let guessHistory = [];
+        // Clue configuration (order of reveals)
+        this.CLUES = [
+            { key: 'founded', label: 'Founded', icon: '🗓️', format: (val) => `Founded in ${val}` },
+            { key: 'country', label: 'Country', icon: '🌍', format: (val) => `From ${val}` },
+            { key: 'city', label: 'City', icon: '🏙️', format: (val) => `Based in ${val}` },
+            { key: 'stadium', label: 'Stadium', icon: '🏟️', format: (val) => `Plays at ${val}` },
+            { key: 'logo', label: 'Blurred Logo', icon: '🔲', type: 'blurred-logo' },
+            { key: 'logo', label: 'Clear Logo', icon: '✅', type: 'clear-logo' }
+        ];
 
-// Clue configuration (order of reveals)
-const CLUES = [
-    { key: 'founded', label: 'Founded', icon: '🗓️', format: (val) => `Founded in ${val}` },
-    { key: 'country', label: 'Country', icon: '🌍', format: (val) => `From ${val}` },
-    { key: 'city', label: 'City', icon: '🏙️', format: (val) => `Based in ${val}` },
-    { key: 'stadium', label: 'Stadium', icon: '🏟️', format: (val) => `Plays at ${val}` },
-    { key: 'logo', label: 'Blurred Logo', icon: '🔲', type: 'blurred-logo' },
-    { key: 'logo', label: 'Clear Logo', icon: '✅', type: 'clear-logo' }
-];
+        this.init();
+    }
 
-// Load teams data
-async function loadTeamsData() {
-    try {
-        showLoading();
-        const response = await fetch('../assets/data/teams.json');
-        if (!response.ok) {
-            throw new Error('Failed to load teams data');
+    async init() {
+        try {
+            await this.loadTeamsData();
+            this.initGame();
+        } catch (error) {
+            console.error('Error initializing game:', error);
+            this.showError('Failed to load game data. Please refresh the page.');
         }
-        teamsData = await response.json();
-        console.log(`✅ Loaded ${teamsData.length} teams`);
-        hideLoading();
-        initGame();
-    } catch (error) {
-        console.error('❌ Error loading teams:', error);
-        showError('Failed to load teams data. Please refresh the page.');
-    }
-}
-
-// Show loading state
-function showLoading() {
-    document.getElementById('gameContainer').innerHTML = `
-        <div class="loading-container">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Loading teams...</div>
-        </div>
-    `;
-}
-
-// Hide loading state
-function hideLoading() {
-    document.getElementById('gameContainer').innerHTML = '';
-}
-
-// Show error message
-function showError(message) {
-    document.getElementById('gameContainer').innerHTML = `
-        <div class="loading-container">
-            <div class="game-over-icon">❌</div>
-            <div class="loading-text">${message}</div>
-        </div>
-    `;
-}
-
-// Initialize game
-function initGame() {
-    if (teamsData.length === 0) {
-        console.error('No teams data available');
-        return;
     }
 
-    // Reset game state
-    currentClueIndex = 0;
-    attemptsUsed = 0;
-    gameOver = false;
-    guessHistory = [];
+    // Load teams data
+    async loadTeamsData() {
+        try {
+            this.showLoading();
+            const response = await fetch('../assets/data/teams.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            
+            // Validate data structure
+            if (!Array.isArray(data) || data.length === 0) {
+                throw new Error('Invalid teams data format');
+            }
 
-    // Select random team
-    currentTeam = teamsData[Math.floor(Math.random() * teamsData.length)];
-    console.log('Selected team:', currentTeam.name); // For testing
+            // Validate each team has required fields
+            const validTeams = data.filter(team => 
+                team.name && 
+                team.founded && 
+                team.country && 
+                team.city && 
+                team.stadium && 
+                team.logo
+            );
 
-    // Reset UI
-    renderGame();
-    updateCluesDisplay();
-    updateAttemptsDisplay();
-    
-    // Focus input
-    document.getElementById('guessInput').focus();
-}
+            if (validTeams.length === 0) {
+                throw new Error('No valid teams found in data');
+            }
 
-// Render main game UI
-function renderGame() {
-    const container = document.getElementById('gameContainer');
-    container.innerHTML = `
-        <div class="game-container">
-            <!-- Attempts Counter -->
-            <div class="attempts-container">
-                <div class="attempts-text">
-                    Attempts: <span class="attempts-count" id="attemptsCount">${attemptsUsed}/${MAX_ATTEMPTS}</span>
-                </div>
+            this.teamsData = validTeams;
+            if (this.DEBUG) {
+                console.log(`✅ Loaded ${this.teamsData.length} teams`);
+            }
+            this.hideLoading();
+        } catch (error) {
+            console.error('❌ Error loading teams:', error);
+            this.hideLoading();
+            throw error;
+        }
+    }
+
+    // Show loading state
+    showLoading() {
+        const container = this.getGameContainer();
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Loading teams...</div>
             </div>
+        `;
+    }
 
-            <!-- Clues Container -->
-            <div class="clues-container">
-                <h2 class="clues-title">🔍 Clues</h2>
-                <div id="cluesDisplay"></div>
-            </div>
+    // Hide loading state
+    hideLoading() {
+        const container = this.getGameContainer();
+        if (container) {
+            container.innerHTML = '';
+        }
+    }
 
-            <!-- Logo Display (hidden initially) -->
-            <div class="logo-container" id="logoContainer" style="display: none;">
-                <div class="logo-wrapper">
-                    <img src="" alt="Team Logo" class="team-logo" id="teamLogo">
-                    <div class="logo-label" id="logoLabel"></div>
-                </div>
-            </div>
+    // Show error message
+    showError(message) {
+        const container = this.getGameContainer();
+        if (!container) return;
 
-            <!-- Input Section -->
-            <div class="input-section">
-                <label class="input-label" for="guessInput">
-                    <img src="../assets/images/soccer-ball.svg" alt="Soccer Ball" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;"> Guess the team name:
-                </label>
-                <input 
-                    type="text" 
-                    id="guessInput" 
-                    class="guess-input" 
-                    placeholder="Enter team name..."
-                    autocomplete="off"
-                >
-                <button class="submit-btn" id="submitBtn">
-                    Submit Guess
+        container.innerHTML = `
+            <div class="loading-container">
+                <div class="game-over-icon">❌</div>
+                <div class="loading-text">${this.escapeHtml(message)}</div>
+                <button class="restart-btn" onclick="location.reload()" style="margin-top: 20px;">
+                    🔄 Refresh Page
                 </button>
             </div>
-        </div>
-    `;
+        `;
+    }
 
-    // Add event listeners
-    document.getElementById('submitBtn').addEventListener('click', handleGuess);
-    document.getElementById('guessInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            handleGuess();
+    // Show validation error message (non-blocking)
+    showValidationError(message) {
+        const input = document.getElementById('guessInput');
+        if (!input) return;
+
+        // Create or update error message element
+        let errorMsg = document.getElementById('validationError');
+        if (!errorMsg) {
+            errorMsg = document.createElement('div');
+            errorMsg.id = 'validationError';
+            errorMsg.className = 'validation-error';
+            errorMsg.setAttribute('role', 'alert');
+            input.parentNode.insertBefore(errorMsg, input);
         }
-    });
-}
-
-// Update clues display
-function updateCluesDisplay() {
-    const cluesDisplay = document.getElementById('cluesDisplay');
-    const logoContainer = document.getElementById('logoContainer');
-    
-    // Clear previous clues
-    cluesDisplay.innerHTML = '';
-    
-    // Show clues up to current index
-    for (let i = 0; i <= currentClueIndex && i < CLUES.length; i++) {
-        const clue = CLUES[i];
         
-        if (clue.type === 'blurred-logo' || clue.type === 'clear-logo') {
-            // Show logo
-            logoContainer.style.display = 'block';
-            const logoImg = document.getElementById('teamLogo');
-            const logoLabel = document.getElementById('logoLabel');
-            
-            logoImg.src = currentTeam.logo;
-            logoLabel.textContent = clue.label;
-            
-            if (clue.type === 'blurred-logo') {
-                logoImg.classList.add('blurred');
-                logoImg.classList.remove('clear');
-            } else {
-                logoImg.classList.remove('blurred');
-                logoImg.classList.add('clear');
-            }
-        } else {
-            // Show text clue
-            const clueElement = document.createElement('div');
-            clueElement.className = 'clue-item';
-            clueElement.innerHTML = `
-                <div class="clue-icon">${clue.icon}</div>
-                <div class="clue-content">
-                    <div class="clue-label">${clue.label}</div>
-                    <div class="clue-value">${clue.format(currentTeam[clue.key])}</div>
-                </div>
-            `;
-            cluesDisplay.appendChild(clueElement);
-        }
-    }
-}
-
-// Update attempts display
-function updateAttemptsDisplay() {
-    document.getElementById('attemptsCount').textContent = `${attemptsUsed}/${MAX_ATTEMPTS}`;
-}
-
-// Handle guess submission
-function handleGuess() {
-    if (gameOver) return;
-
-    const input = document.getElementById('guessInput');
-    const guess = input.value.trim();
-
-    // Validate input
-    if (!guess) {
-        alert('Please enter a team name!');
-        return;
-    }
-
-    // Increment attempts
-    attemptsUsed++;
-    updateAttemptsDisplay();
-
-    // Add to history
-    addGuessToHistory(guess);
-
-    // Check if correct (case-insensitive)
-    const isCorrect = guess.toLowerCase() === currentTeam.name.toLowerCase();
-
-    if (isCorrect) {
-        // Win!
-        gameOver = true;
-        setTimeout(() => showGameOver(true), 500);
-    } else {
-        // Wrong guess - show error animation
-        input.classList.add('error');
+        errorMsg.textContent = message;
+        errorMsg.style.display = 'block';
+        
+        // Remove error after 3 seconds
         setTimeout(() => {
-            input.classList.remove('error');
-        }, 500);
+            if (errorMsg) {
+                errorMsg.style.display = 'none';
+            }
+        }, 3000);
+    }
+
+    // Get game container with error handling
+    getGameContainer() {
+        const container = document.getElementById('gameContainer');
+        if (!container) {
+            console.error('Game container not found');
+        }
+        return container;
+    }
+
+    // Escape HTML to prevent XSS
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Normalize team name for comparison (handles common variations)
+    normalizeTeamName(name) {
+        if (!name) return '';
         
-        if (attemptsUsed >= MAX_ATTEMPTS) {
-            // Lost - all attempts used
-            gameOver = true;
-            setTimeout(() => showGameOver(false), 500);
-        } else {
-            // Show next clue
-            if (currentClueIndex < CLUES.length - 1) {
-                currentClueIndex++;
-                updateCluesDisplay();
+        return name
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, ' ') // Normalize whitespace
+            .replace(/[^\w\s]/g, '') // Remove special characters
+            .replace(/\b(fc|cf|cfc|united|utd|city|town|rovers|athletic|ath|albion)\b/gi, ''); // Remove common suffixes
+    }
+
+    // Check if guess matches team name (fuzzy matching)
+    isGuessCorrect(guess, teamName) {
+        const normalizedGuess = this.normalizeTeamName(guess);
+        const normalizedTeam = this.normalizeTeamName(teamName);
+        
+        // Exact match (case-insensitive)
+        if (guess.toLowerCase().trim() === teamName.toLowerCase().trim()) {
+            return true;
+        }
+        
+        // Normalized match
+        if (normalizedGuess === normalizedTeam) {
+            return true;
+        }
+        
+        // Check if normalized guess contains team name or vice versa
+        if (normalizedGuess.includes(normalizedTeam) || normalizedTeam.includes(normalizedGuess)) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    // Initialize game
+    initGame() {
+        if (this.teamsData.length === 0) {
+            console.error('No teams data available');
+            this.showError('No teams data available. Please refresh the page.');
+            return;
+        }
+
+        // Reset game state
+        this.currentClueIndex = 0;
+        this.attemptsUsed = 0;
+        this.gameOver = false;
+        this.guessHistory = [];
+
+        // Select random team
+        this.currentTeam = this.teamsData[Math.floor(Math.random() * this.teamsData.length)];
+        
+        if (this.DEBUG) {
+            console.log('Selected team:', this.currentTeam.name);
+        }
+
+        // Validate team data
+        if (!this.currentTeam || !this.currentTeam.name) {
+            console.error('Invalid team selected');
+            this.showError('Error selecting team. Please refresh the page.');
+            return;
+        }
+
+        // Reset UI
+        this.renderGame();
+        this.updateCluesDisplay();
+        this.updateAttemptsDisplay();
+        
+        // Focus input after a short delay to ensure DOM is ready
+        setTimeout(() => {
+            const input = document.getElementById('guessInput');
+            if (input) {
+                input.focus();
+            }
+        }, 100);
+    }
+
+    // Render main game UI
+    renderGame() {
+        const container = this.getGameContainer();
+        if (!container) return;
+
+        container.innerHTML = `
+            <div class="game-container">
+                <!-- Attempts Counter -->
+                <div class="attempts-container">
+                    <div class="attempts-text">
+                        Attempts: <span class="attempts-count" id="attemptsCount">${this.attemptsUsed}/${this.MAX_ATTEMPTS}</span>
+                    </div>
+                </div>
+
+                <!-- Clues Container -->
+                <div class="clues-container">
+                    <h2 class="clues-title">🔍 Clues</h2>
+                    <div id="cluesDisplay" role="list" aria-label="Game clues"></div>
+                </div>
+
+                <!-- Logo Display (hidden initially) -->
+                <div class="logo-container" id="logoContainer" style="display: none;" role="img" aria-label="Team logo">
+                    <div class="logo-wrapper">
+                        <img src="" alt="Team Logo" class="team-logo" id="teamLogo" loading="lazy">
+                        <div class="logo-label" id="logoLabel"></div>
+                    </div>
+                </div>
+
+                <!-- Input Section -->
+                <div class="input-section">
+                    <label class="input-label" for="guessInput">
+                        <img src="../assets/images/soccer-ball.svg" alt="Soccer Ball" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;"> Guess the team name:
+                    </label>
+                    <input 
+                        type="text" 
+                        id="guessInput" 
+                        class="guess-input" 
+                        placeholder="Enter team name..."
+                        autocomplete="off"
+                        aria-label="Team name guess input"
+                        aria-describedby="validationError"
+                    >
+                    <button class="submit-btn" id="submitBtn" aria-label="Submit your guess">
+                        Submit Guess
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Add event listeners with error handling
+        const submitBtn = document.getElementById('submitBtn');
+        const guessInput = document.getElementById('guessInput');
+        
+        if (submitBtn) {
+            submitBtn.addEventListener('click', () => this.handleGuess());
+        }
+        
+        if (guessInput) {
+            guessInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.handleGuess();
+                }
+            });
+        }
+    }
+
+    // Update clues display
+    updateCluesDisplay() {
+        const cluesDisplay = document.getElementById('cluesDisplay');
+        const logoContainer = document.getElementById('logoContainer');
+        
+        if (!cluesDisplay || !this.currentTeam) return;
+        
+        // Clear previous clues
+        cluesDisplay.innerHTML = '';
+        
+        // Show clues up to current index
+        for (let i = 0; i <= this.currentClueIndex && i < this.CLUES.length; i++) {
+            const clue = this.CLUES[i];
+            
+            if (clue.type === 'blurred-logo' || clue.type === 'clear-logo') {
+                // Show logo
+                if (logoContainer) {
+                    logoContainer.style.display = 'block';
+                    const logoImg = document.getElementById('teamLogo');
+                    const logoLabel = document.getElementById('logoLabel');
+                    
+                    if (logoImg && logoLabel) {
+                        // Handle image loading errors
+                        logoImg.onerror = () => {
+                            logoImg.alt = 'Logo not available';
+                            if (this.DEBUG) {
+                                console.warn('Failed to load logo:', this.currentTeam.logo);
+                            }
+                        };
+                        
+                        logoImg.src = this.currentTeam.logo;
+                        logoLabel.textContent = clue.label;
+                        
+                        if (clue.type === 'blurred-logo') {
+                            logoImg.classList.add('blurred');
+                            logoImg.classList.remove('clear');
+                        } else {
+                            logoImg.classList.remove('blurred');
+                            logoImg.classList.add('clear');
+                        }
+                    }
+                }
+            } else {
+                // Show text clue
+                const clueElement = document.createElement('div');
+                clueElement.className = 'clue-item';
+                clueElement.setAttribute('role', 'listitem');
+                clueElement.innerHTML = `
+                    <div class="clue-icon" aria-hidden="true">${clue.icon}</div>
+                    <div class="clue-content">
+                        <div class="clue-label">${this.escapeHtml(clue.label)}</div>
+                        <div class="clue-value">${this.escapeHtml(clue.format(this.currentTeam[clue.key]))}</div>
+                    </div>
+                `;
+                cluesDisplay.appendChild(clueElement);
             }
         }
     }
 
-    // Clear input
-    input.value = '';
-    input.focus();
-}
+    // Update attempts display
+    updateAttemptsDisplay() {
+        const attemptsCount = document.getElementById('attemptsCount');
+        if (attemptsCount) {
+            attemptsCount.textContent = `${this.attemptsUsed}/${this.MAX_ATTEMPTS}`;
+        }
+    }
 
-// Add guess to history (keeping track internally but not displaying)
-function addGuessToHistory(guess) {
-    guessHistory.push(guess);
-}
+    // Handle guess submission
+    handleGuess() {
+        if (this.gameOver) return;
 
-// Show game over overlay
-function showGameOver(won) {
-    // Disable input
-    document.getElementById('guessInput').disabled = true;
-    document.getElementById('submitBtn').disabled = true;
+        const input = document.getElementById('guessInput');
+        if (!input) {
+            console.error('Input element not found');
+            return;
+        }
 
-    // Create overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'game-over-overlay';
-    overlay.innerHTML = `
-        <div class="game-over-card">
-            <div class="game-over-icon">${won ? '🎉' : '😔'}</div>
-            <h2 class="game-over-title ${won ? 'win' : 'lose'}">
-                ${won ? 'GOAL!' : 'GAME OVER'}
-            </h2>
-            <p class="game-over-message">
-                ${won 
-                    ? `Congratulations! You guessed it in <strong>${attemptsUsed}</strong> ${attemptsUsed === 1 ? 'attempt' : 'attempts'}!`
-                    : `Nice try! You used all ${MAX_ATTEMPTS} attempts.`
+        const guess = input.value.trim();
+
+        // Validate input
+        if (!guess) {
+            this.showValidationError('Please enter a team name!');
+            input.focus();
+            return;
+        }
+
+        // Sanitize input (basic check for XSS)
+        if (guess.length > 100) {
+            this.showValidationError('Team name is too long. Please enter a valid team name.');
+            input.focus();
+            return;
+        }
+
+        // Increment attempts
+        this.attemptsUsed++;
+        this.updateAttemptsDisplay();
+
+        // Add to history
+        this.guessHistory.push(guess);
+
+        // Check if correct using improved matching
+        const isCorrect = this.isGuessCorrect(guess, this.currentTeam.name);
+
+        if (isCorrect) {
+            // Win!
+            this.gameOver = true;
+            setTimeout(() => this.showGameOver(true), 500);
+        } else {
+            // Wrong guess - show error animation
+            input.classList.add('error');
+            setTimeout(() => {
+                input.classList.remove('error');
+            }, 500);
+            
+            if (this.attemptsUsed >= this.MAX_ATTEMPTS) {
+                // Lost - all attempts used
+                this.gameOver = true;
+                setTimeout(() => this.showGameOver(false), 500);
+            } else {
+                // Show next clue
+                if (this.currentClueIndex < this.CLUES.length - 1) {
+                    this.currentClueIndex++;
+                    this.updateCluesDisplay();
                 }
-            </p>
-            <div class="correct-answer">
-                <div class="correct-answer-label">The team was:</div>
-                <div class="correct-answer-team">
-                    <img src="${currentTeam.logo}" alt="${currentTeam.name}" class="correct-answer-logo">
-                    <div class="correct-answer-name">${currentTeam.name}</div>
+            }
+        }
+
+        // Clear input
+        input.value = '';
+        input.focus();
+    }
+
+    // Show game over overlay
+    showGameOver(won) {
+        // Disable input
+        const input = document.getElementById('guessInput');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        if (input) input.disabled = true;
+        if (submitBtn) submitBtn.disabled = true;
+
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'game-over-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-labelledby', 'gameOverTitle');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.innerHTML = `
+            <div class="game-over-card">
+                <div class="game-over-icon" aria-hidden="true">${won ? '🎉' : '😔'}</div>
+                <h2 id="gameOverTitle" class="game-over-title ${won ? 'win' : 'lose'}">
+                    ${won ? 'GOAL!' : 'GAME OVER'}
+                </h2>
+                <p class="game-over-message">
+                    ${won 
+                        ? `Congratulations! You guessed it in <strong>${this.attemptsUsed}</strong> ${this.attemptsUsed === 1 ? 'attempt' : 'attempts'}!`
+                        : `Nice try! You used all ${this.MAX_ATTEMPTS} attempts.`
+                    }
+                </p>
+                <div class="correct-answer">
+                    <div class="correct-answer-label">The team was:</div>
+                    <div class="correct-answer-team">
+                        <img src="${this.escapeHtml(this.currentTeam.logo)}" alt="${this.escapeHtml(this.currentTeam.name)}" class="correct-answer-logo" loading="lazy">
+                        <div class="correct-answer-name">${this.escapeHtml(this.currentTeam.name)}</div>
+                    </div>
+                </div>
+                <div class="game-over-buttons">
+                    <button class="restart-btn" id="restartBtn" aria-label="Play again">
+                        🔄 Play Again
+                    </button>
+                    <a href="../index.html" class="home-btn" aria-label="Go to home page">
+                        🏠 Home
+                    </a>
                 </div>
             </div>
-            <div class="game-over-buttons">
-                <button class="restart-btn" onclick="restartGame()">
-                    🔄 Play Again
-                </button>
-                <a href="../index.html" class="home-btn">
-                    🏠 Home
-                </a>
-            </div>
-        </div>
-    `;
+        `;
 
-    document.body.appendChild(overlay);
+        document.body.appendChild(overlay);
 
-    // Add click outside to close
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-            overlay.remove();
+        // Add event listeners
+        const restartBtn = overlay.querySelector('#restartBtn');
+        if (restartBtn) {
+            restartBtn.addEventListener('click', () => this.restartGame());
         }
-    });
-}
 
-// Restart game
-function restartGame() {
-    // Remove overlay
-    const overlay = document.querySelector('.game-over-overlay');
-    if (overlay) {
-        overlay.remove();
+        // Add click outside to close
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                this.restartGame();
+            }
+        });
+
+        // Focus restart button for accessibility
+        if (restartBtn) {
+            setTimeout(() => restartBtn.focus(), 100);
+        }
+
+        // Trap focus within modal
+        overlay.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.restartGame();
+            }
+        });
     }
 
     // Restart game
-    initGame();
+    restartGame() {
+        // Remove overlay
+        const overlay = document.querySelector('.game-over-overlay');
+        if (overlay) {
+            overlay.remove();
+        }
+
+        // Remove validation error if present
+        const validationError = document.getElementById('validationError');
+        if (validationError) {
+            validationError.remove();
+        }
+
+        // Restart game
+        this.initGame();
+    }
 }
 
-// Start the game when page loads
+// Initialize game when page loads
+let game;
 document.addEventListener('DOMContentLoaded', () => {
-    loadTeamsData();
+    game = new ClubGuesserGame();
 });
+
+// Expose restartGame for backward compatibility (if needed)
+window.restartGame = function() {
+    if (game) {
+        game.restartGame();
+    }
+};

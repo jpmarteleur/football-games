@@ -3,27 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test your football knowledge by guessing the club from clues! Get hints about the team's founding year, country, city, stadium, and logo.">
     <title>Club Guesser - Football Games</title>
     <link rel="stylesheet" href="../assets/css/variables.css?v=9">
     <link rel="stylesheet" href="../assets/css/global.css?v=9">
     <link rel="stylesheet" href="../assets/css/club-guesser.css?v=9">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo"><a href="../index.html" class="nav-logo-link">Football Games</a></div>
-        </div>
-    </nav>
-    <div class="main-content">
+    <header>
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="nav-container">
+                <div class="nav-logo"><a href="../index.html" class="nav-logo-link" aria-label="Go to home page">Football Games</a></div>
+            </div>
+        </nav>
+    </header>
+    <main class="main-content" role="main">
         <div class="container">
-            <div class="soccer-icon"><img src="../assets/images/soccer-ball.svg" alt="Soccer Ball"></div>
+            <div class="soccer-icon" aria-hidden="true">
+                <img src="../assets/images/soccer-ball.svg" alt="Soccer Ball">
+            </div>
             <h1>Club Guesser</h1>
             <p class="subtitle">Guess the football club!</p>
             
             <!-- Game Container (dynamically populated) -->
-            <div id="gameContainer"></div>
+            <div id="gameContainer" role="region" aria-live="polite" aria-label="Game area"></div>
         </div>
-    </div>
+    </main>
     
     <script src="../assets/js/club-guesser.js"></script>
 </body>
