@@ -163,13 +163,13 @@ class TrueFalseGame {
         
         if (isTrue) {
             this.currentQuestion = {
-                text: `${player.lastName} is a ${player.position}`,
+                text: `${player.lastName} is a(n) ${player.position}`,
                 answer: true
             };
         } else {
             const wrongPosition = this.getRandomPosition(player.position);
             this.currentQuestion = {
-                text: `${player.lastName} is a ${wrongPosition}`,
+                text: `${player.lastName} is a(n) ${wrongPosition}`,
                 answer: false
             };
         }
@@ -280,14 +280,14 @@ class TrueFalseGame {
 
     showGameOverModal() {
         const funMessages = [
-            "Keep pushing! Every champion started somewhere! 💪",
-            "Great effort! You're getting better with every game! 🌟",
-            "Nice try! The best is yet to come! 🚀",
-            "Don't give up! Champions are made in practice! ⚽",
-            "Awesome attempt! You're on the right track! 🎯",
-            "Well played! Your skills are improving! 🏆",
-            "Good game! Ready for another round? 🔥",
-            "Solid effort! Practice makes perfect! ⭐"
+            "Keep pushing! Every champion started somewhere!",
+            "Great effort! You're getting better with every game!",
+            "Nice try! The best is yet to come!",
+            "Don't give up! Champions are made in practice!",
+            "Awesome attempt! You're on the right track!",
+            "Well played! Your skills are improving!",
+            "Good game! Ready for another round?",
+            "Solid effort! Practice makes perfect!"
         ];
 
         const randomMessage = funMessages[Math.floor(Math.random() * funMessages.length)];
