@@ -8,22 +8,19 @@ const DIFFICULTY_SETTINGS = {
         nameLength: { min: 8, max: 12 },
         showNationality: true,
         showPosition: true,
-        label: 'EASY',
-        emoji: '🟢'
+        label: 'EASY'
     },
     medium: {
         nameLength: { min: 5, max: 10 },
         showNationality: true,
         showPosition: false,
-        label: 'MEDIUM',
-        emoji: '🟡'
+        label: 'MEDIUM'
     },
     hard: {
         nameLength: { min: 4, max: 7 },
         showNationality: false,
         showPosition: false,
-        label: 'HARD',
-        emoji: '🔴'
+        label: 'HARD'
     }
 };
 
@@ -131,7 +128,7 @@ function hideDifficultySelector() {
 function updateDifficultyIndicator() {
     const settings = DIFFICULTY_SETTINGS[currentDifficulty];
     const indicator = document.getElementById('difficultyIndicator');
-    indicator.textContent = `${settings.emoji} ${settings.label}`;
+    indicator.textContent = settings.label;
     indicator.className = `difficulty-indicator ${currentDifficulty}`;
 }
 
