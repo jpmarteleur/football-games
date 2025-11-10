@@ -3,17 +3,38 @@
     background: var(--card-background);
     -webkit-backdrop-filter: blur(25px);
     backdrop-filter: blur(25px);
-    border-radius: 24px;
-    padding: 40px;
+    border-radius: 20px;
+    padding: 25px;
     box-shadow:
         0 8px 32px rgba(249, 115, 22, 0.2),
         inset 0 1px 0 rgba(249, 115, 22, 0.08);
-    max-width: 1200px;
-    width: calc(100% - 40px);
+    max-width: 850px;
+    width: calc(100% - 30px);
     border: 1px solid rgba(249, 115, 22, 0.2);
     position: relative;
-    margin: 40px auto;
+    margin: 20px auto;
     color: var(--text-primary);
+}
+
+/* Compact h1 for homepage */
+.welcome-container h1 {
+    font-size: 2em;
+    margin-bottom: 8px;
+    margin-top: 0.5rem;
+}
+
+.welcome-container .subtitle {
+    font-size: 0.9em;
+    margin-bottom: 1rem;
+}
+
+.welcome-container .soccer-icon {
+    margin-bottom: 5px;
+}
+
+.welcome-container .soccer-icon img {
+    width: 1.2em;
+    height: 1.2em;
 }
 
 .welcome-container::before {
@@ -37,36 +58,36 @@
 
 .welcome-content {
     text-align: center;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
 }
 
 .welcome-content > p {
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: var(--text-secondary);
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     font-weight: 500;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
-/* Game Cards Grid */
+/* Game Cards Grid - Vertical cards layout */
 .game-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
-    margin-top: 2.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 0;
+    max-width: 100%;
 }
 
-/* Game Card - NO LONGER A LINK */
+/* Game Card - Vertical card design */
 .game-card {
     background: var(--card-background);
     -webkit-backdrop-filter: blur(25px);
     backdrop-filter: blur(25px);
-    border-radius: 20px;
-    padding: 2rem;
+    border-radius: 16px;
     color: var(--text-primary);
     border: 1px solid rgba(249, 115, 22, 0.2);
     transition: all 0.35s ease;
-    text-align: center;
     position: relative;
     overflow: hidden;
     box-shadow:
@@ -74,6 +95,11 @@
         inset 0 1px 0 rgba(249, 115, 22, 0.08);
     cursor: default;
     animation: cardEntry 0.8s ease-out backwards;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    aspect-ratio: 3 / 4.2;
+    min-height: 280px;
 }
 
 .game-card:nth-child(1) {
@@ -130,61 +156,64 @@
     animation-duration: 2s;
 }
 
-/* Game card icon/emoji at the top */
-.game-card::after {
-    content: '🎮';
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 2.5rem;
-    opacity: 0.15;
-    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+/* Game card image container */
+.game-card-image {
+    width: 100%;
+    height: 42%;
+    overflow: hidden;
+    position: relative;
+    background: rgba(249, 115, 22, 0.1);
 }
 
-.game-card:hover::after {
-    transform: scale(1.3) rotate(15deg);
-    opacity: 0.3;
+.game-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
 }
 
-/* Different emojis for different games */
-.game-card:nth-child(1)::after {
-    content: '⚽';
+.game-card:hover .game-card-image img {
+    transform: scale(1.1);
 }
 
-.game-card:nth-child(2)::after {
-    content: '🏆';
+/* Game card content container */
+.game-card-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    text-align: center;
 }
 
-.game-card:nth-child(3)::after {
-    content: '❓';
-}
-
-.game-card h2 {
+.game-card-content h2 {
     color: var(--text-primary);
-    margin-bottom: 1.2rem;
-    font-size: 1.8rem;
+    margin-bottom: 0.6rem;
+    font-size: 1.2rem;
     font-weight: 800;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.3px;
     position: relative;
     z-index: 1;
+    line-height: 1.3;
 }
 
-.game-card p {
+.game-card-content p {
     color: var(--text-secondary);
-    margin-bottom: 2rem;
-    font-size: 1.05rem;
-    line-height: 1.6;
-    min-height: 60px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    flex-grow: 1;
 }
 
-/* Button styling - THESE ARE NOW THE ONLY CLICKABLE ELEMENTS */
-.game-card .play-now,
-.game-card .status {
+/* Button styling */
+.game-card-content .play-now,
+.game-card-content .status {
     display: inline-block;
-    padding: 0.9rem 2rem;
-    border-radius: 12px;
-    font-weight: 800;
-    font-size: 1.05rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.8rem;
     text-decoration: none;
     transition: all 0.3s ease;
     text-transform: uppercase;
@@ -192,10 +221,12 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    margin-top: auto;
+    align-self: center;
 }
 
 /* Play Now button - Active games */
-.game-card .play-now {
+.game-card-content .play-now {
     background: rgba(249, 115, 22, 0.18);
     color: #ffffff;
     border: 1px solid rgba(249, 115, 22, 0.35);
@@ -207,7 +238,7 @@
     transition: all 0.3s ease;
 }
 
-.game-card .play-now::before {
+.game-card-content .play-now::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -220,7 +251,7 @@
     transition: width 0.8s ease, height 0.8s ease;
 }
 
-.game-card .play-now::after {
+.game-card-content .play-now::after {
     content: '';
     position: absolute;
     top: 0;
@@ -231,24 +262,24 @@
     transition: left 0.6s ease;
 }
 
-.game-card .play-now:hover {
-    transform: translateY(-5px);
+.game-card-content .play-now:hover {
+    transform: translateY(-3px);
     box-shadow:
         0 12px 36px rgba(249, 115, 22, 0.35);
     background: rgba(249, 115, 22, 0.28);
 }
 
-.game-card .play-now:hover::before {
+.game-card-content .play-now:hover::before {
     width: 300px;
     height: 300px;
 }
 
-.game-card .play-now:hover::after {
+.game-card-content .play-now:hover::after {
     left: 100%;
 }
 
-.game-card .play-now:active {
-    transform: translateY(-2px);
+.game-card-content .play-now:active {
+    transform: translateY(-1px);
     box-shadow:
         0 10px 28px rgba(249, 115, 22, 0.25);
 }
@@ -259,15 +290,15 @@
     background: linear-gradient(135deg, rgba(35, 28, 22, 0.6) 0%, rgba(41, 32, 26, 0.65) 100%);
 }
 
-.game-card.coming-soon h2 {
+.game-card.coming-soon .game-card-content h2 {
     color: rgba(255, 255, 255, 0.6);
 }
 
-.game-card.coming-soon p {
+.game-card.coming-soon .game-card-content p {
     color: rgba(255, 255, 255, 0.45);
 }
 
-.game-card.coming-soon .status {
+.game-card-content .status {
     background: rgba(249, 115, 22, 0.22);
     color: rgba(255, 255, 255, 0.75);
     border: 1px solid rgba(249, 115, 22, 0.35);
@@ -279,20 +310,194 @@
     transform: translateY(-4px);
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
+/* Responsive design - Mobile: 2 cards per row */
+@media (max-width: 640px) {
+    .welcome-container {
+        padding: 20px 15px;
+        margin: 15px auto;
+        width: calc(100% - 20px);
+        max-width: 100%;
+    }
+    
+    .welcome-content {
+        margin-top: 1rem;
+    }
+    
+    .welcome-content > p {
+        font-size: 0.9rem;
+        margin-bottom: 1.25rem;
+    }
+    
     .game-cards {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+        padding: 0 5px;
     }
     
     .game-card {
-        padding: 1.5rem;
+        min-height: 240px;
+        aspect-ratio: 3 / 4.5;
+        border-radius: 14px;
     }
     
-    .game-card .play-now,
-    .game-card .status {
-        padding: 1rem 2.5rem;
-        font-size: 1.1rem;
+    .game-card-image {
+        height: 40%;
     }
+    
+    .game-card-content {
+        padding: 0.85rem;
+    }
+    
+    .game-card-content h2 {
+        font-size: 1.05rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .game-card-content p {
+        font-size: 0.75rem;
+        margin-bottom: 0.85rem;
+    }
+    
+    .game-card-content .play-now,
+    .game-card-content .status {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Responsive design - Small tablets: 2 cards per row */
+@media (min-width: 641px) and (max-width: 768px) {
+    .welcome-container {
+        max-width: 750px;
+        padding: 22px;
+    }
+    
+    .game-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .game-card {
+        min-height: 260px;
+    }
+    
+    .game-card-content {
+        padding: 1rem;
+    }
+    
+    .game-card-content h2 {
+        font-size: 1.15rem;
+    }
+    
+    .game-card-content p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Responsive design - Tablets: 3 cards per row */
+@media (min-width: 769px) and (max-width: 1023px) {
+    .welcome-container {
+        max-width: 800px;
+        padding: 22px;
+    }
+    
+    .game-cards {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        padding: 0;
+    }
+    
+    .game-card {
+        min-height: 300px;
+    }
+    
+    .game-card-content {
+        padding: 1rem;
+    }
+    
+    .game-card-content h2 {
+        font-size: 1.15rem;
+    }
+    
+    .game-card-content p {
+        font-size: 0.85rem;
+    }
+}
+
+/* Responsive design - Laptop screens: Keep compact, 3 cards per row */
+@media (min-width: 1024px) and (max-width: 1399px) {
+    .welcome-container {
+        max-width: 850px;
+        padding: 25px;
+    }
+    
+    .game-cards {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        max-width: 100%;
+    }
+    
+    .game-card {
+        min-height: 280px;
+    }
+    
+    .game-card-content {
+        padding: 1rem;
+    }
+    
+    .game-card-content h2 {
+        font-size: 1.2rem;
+    }
+    
+    .game-card-content p {
+        font-size: 0.85rem;
+    }
+    
+    .game-card-content .play-now,
+    .game-card-content .status {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Responsive design - Large desktop screens: Slightly larger */
+@media (min-width: 1400px) {
+    .welcome-container {
+        max-width: 950px;
+        padding: 30px;
+    }
+    
+    .welcome-content > p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .game-cards {
+        gap: 1.25rem;
+        max-width: 100%;
+    }
+    
+    .game-card {
+        min-height: 320px;
+    }
+    
+    .game-card-content {
+        padding: 1.25rem;
+    }
+    
+    .game-card-content h2 {
+        font-size: 1.3rem;
+    }
+    
+    .game-card-content p {
+        font-size: 0.9rem;
+    }
+    
+    .game-card-content .play-now,
+    .game-card-content .status {
+        padding: 0.7rem 1.4rem;
+        font-size: 0.85rem;
+    }
+}
 }
