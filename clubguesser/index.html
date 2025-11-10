@@ -30,6 +30,23 @@
         </div>
     </main>
     
-    <script src="../assets/js/club-guesser.js"></script>
+    <!-- Services -->
+    <script src="../assets/js/services/DataService.js"></script>
+    <!-- Game -->
+    <script src="../assets/js/games/ClubGuesser/ClubGuesserGame.js"></script>
+    <!-- Initialize Game -->
+    <script>
+        let game;
+        document.addEventListener('DOMContentLoaded', () => {
+            game = new ClubGuesserGame();
+        });
+        
+        // Expose restartGame for backward compatibility (if needed)
+        window.restartGame = function() {
+            if (game) {
+                game.restartGame();
+            }
+        };
+    </script>
 </body>
 </html>

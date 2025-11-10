@@ -117,9 +117,25 @@
             <button class="modal-button" id="modalButton">Play Again</button>
         </div>
     </div>
-    <script src="../config.js?v=8"></script>
-    <script src="../assets/js/player-data-manager.js?v=8"></script>
-    <script src="../assets/js/stats.js?v=8"></script>
-    <script src="../assets/js/player-wordle.js?v=9"></script>
+    <!-- Services -->
+    <script src="../assets/js/services/DataService.js"></script>
+    <!-- Utils -->
+    <script src="../assets/js/utils/StatsManager.js"></script>
+    <script src="../assets/js/utils/MobileInputHandler.js"></script>
+    <!-- Game Components -->
+    <script src="../assets/js/games/PlayerWordle/DifficultyManager.js"></script>
+    <script src="../assets/js/games/PlayerWordle/BoardRenderer.js"></script>
+    <script src="../assets/js/games/PlayerWordle/PlayerWordleGame.js"></script>
+    <!-- Initialize Game -->
+    <script>
+        // Set data service base path
+        dataService.setBasePath('../assets/data');
+        
+        // Initialize game when DOM is ready
+        let game;
+        document.addEventListener('DOMContentLoaded', () => {
+            game = new PlayerWordleGame();
+        });
+    </script>
 </body>
 </html>

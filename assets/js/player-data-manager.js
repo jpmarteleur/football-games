@@ -1,5 +1,9 @@
 // Player Data Manager - Handles API fetching and caching
 // Version 3.0 - Now saves FULL player data (photos, teams, stats, etc.)
+// 
+// NOTE: This file is for DEVELOPMENT USE ONLY
+// In production, games use DataService.js which loads from JSON files directly
+// This file is kept for development/testing purposes to fetch fresh data from the API
 
 const PlayerDataManager = {
     // Check if cached data exists and is still valid

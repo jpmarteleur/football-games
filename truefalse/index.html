@@ -31,6 +31,18 @@
         </div>
     </div>
 
-    <script src="../assets/js/true-false.js"></script>
+    <!-- Services -->
+    <script src="../assets/js/services/DataService.js"></script>
+    <!-- Utils -->
+    <script src="../assets/js/utils/StatsManager.js"></script>
+    <!-- Game -->
+    <script src="../assets/js/games/TrueFalse/TrueFalseGame.js"></script>
+    <!-- Initialize Game -->
+    <script>
+        let game;
+        document.addEventListener('DOMContentLoaded', () => {
+            game = new TrueFalseGame();
+        });
+    </script>
 </body>
 </html>
