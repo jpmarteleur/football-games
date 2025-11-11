@@ -38,5 +38,23 @@ If you encounter any bugs or have feature suggestions, please open an issue or s
 
 ---
 
+## 📚 What I Learned
+
+Throughout this project I strengthened a set of general front‑end skills that apply beyond any single app:
+- Version control and collaboration: using Git for commits; working with GitHub issues and GitHub Pages for simple deployments.
+- Browser fundamentals: manipulating the DOM, handling events, and understanding the render cycle; using the Console and Network panels for debugging.
+- Client‑side storage: persisting lightweight state with localStorage; namespacing keys, safely JSON-encoding/decoding, and adding fallbacks when storage is unavailable.
+- Modular JavaScript: organizing code by responsibility (game logic, rendering, services, utilities) to keep things maintainable and testable.
+- Data handling: fetching and validating JSON data; defensive coding for missing or inconsistent fields.
+- State management: keeping a clear, minimal source of truth for session/game state and updating it predictably.
+- UX and accessibility basics: supporting keyboard and touch inputs, sensible focus management, and timely user feedback.
+- Responsive design: adapting layouts with CSS variables and media queries for mobile and desktop.
+- Performance basics: precomputing/caching derived data, avoiding unnecessary DOM work, and measuring with browser DevTools.
+- Progressive enhancement: starting with plain HTML/CSS/JS and layering features without heavy frameworks when not needed.
+- Deployment and hosting: serving a static site and handling relative asset paths across local and hosted environments.
+- Debugging and tooling: using breakpoints, watchers, and consistent formatting/linting to speed up iteration and reduce regressions.
+
+---
+
 Thanks for checking out **Football Games**!  
 More updates will come as the project evolves.
