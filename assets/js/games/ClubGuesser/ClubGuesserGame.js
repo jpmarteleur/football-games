@@ -447,6 +447,7 @@ class ClubGuesserGame {
         modal.setAttribute('aria-modal', 'true');
         modal.innerHTML = `
             <div class="modal-content">
+                <button class="modal-close" id="modalClose" aria-label="Close modal">×</button>
                 <div class="modal-icon" aria-hidden="true">${won ? '🎉' : '😔'}</div>
                 <h2 id="modalTitle" class="modal-title ${won ? 'win' : 'lose'}">
                     ${won ? 'GOAL!' : 'GAME OVER'}
@@ -477,8 +478,14 @@ class ClubGuesserGame {
 
         // Add event listeners
         const restartBtn = modal.querySelector('#restartBtn');
+        const closeBtn = modal.querySelector('#modalClose');
+        
         if (restartBtn) {
             restartBtn.addEventListener('click', () => this.restartGame());
+        }
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.restartGame());
         }
 
         // Add click outside to close

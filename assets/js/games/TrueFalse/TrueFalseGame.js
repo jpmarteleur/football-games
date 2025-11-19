@@ -334,6 +334,7 @@ class TrueFalseGame {
         modal.id = 'gameOverModal';
         modal.innerHTML = `
             <div class="modal-content">
+                <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
                 <div class="game-over-content">
                     <h2>Game Over! 🎮</h2>
                     <div class="streak-label">Your Streak</div>
@@ -350,6 +351,12 @@ class TrueFalseGame {
         setTimeout(() => {
             modal.classList.add('show');
         }, 10);
+        
+        // Add close button event listener
+        const closeBtn = document.getElementById('modalClose');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.playAgain());
+        }
     }
 
     playAgain() {
