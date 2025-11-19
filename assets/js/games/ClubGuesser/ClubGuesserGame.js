@@ -465,12 +465,14 @@ class ClubGuesserGame {
                         <div class="correct-answer-name">${this.escapeHtml(this.currentTeam.name)}</div>
                     </div>
                 </div>
-                <button class="modal-button" id="restartBtn" aria-label="Play again">
-                    🔄 Play Again
-                </button>
-                <a href="../index.html" class="modal-button" style="display: inline-block; text-decoration: none; margin-top: 10px;" aria-label="Go to home page">
-                    🏠 Home
-                </a>
+                <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+                    <button class="modal-button" id="restartBtn" aria-label="Play again" style="flex: 1; max-width: 160px; background: rgba(249, 115, 22, 0.25); border-color: rgba(249, 115, 22, 0.4);">
+                        Play Again
+                    </button>
+                    <a href="../index.html" class="modal-button" style="flex: 1; max-width: 160px; display: inline-block; text-decoration: none; background: rgba(255, 255, 255, 0.08); border-color: rgba(249, 115, 22, 0.25);" aria-label="Go to home page">
+                        Home
+                    </a>
+                </div>
             </div>
         `;
 
@@ -494,11 +496,6 @@ class ClubGuesserGame {
                 this.restartGame();
             }
         });
-
-        // Focus restart button for accessibility
-        if (restartBtn) {
-            setTimeout(() => restartBtn.focus(), 100);
-        }
 
         // Trap focus within modal
         modal.addEventListener('keydown', (e) => {
