@@ -341,7 +341,14 @@ class TrueFalseGame {
                     <div class="streak-result">${this.currentStreak}</div>
                     ${isNewRecord ? '<div class="best-streak-badge">🎉 NEW RECORD! 🎉</div>' : ''}
                     <div class="fun-message">${randomMessage}</div>
-                    <button class="play-again-btn" onclick="game.playAgain()">Play Again</button>
+                    <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+                        <button class="modal-button" id="playAgainBtn" style="flex: 1; max-width: 160px; background: rgba(249, 115, 22, 0.25); border-color: rgba(249, 115, 22, 0.4);">
+                            Play Again
+                        </button>
+                        <a href="../index.html" class="modal-button" style="flex: 1; max-width: 160px; display: inline-block; text-decoration: none; background: rgba(255, 255, 255, 0.08); border-color: rgba(249, 115, 22, 0.25);" aria-label="Go to home page">
+                            Home
+                        </a>
+                    </div>
                 </div>
             </div>
         `;
@@ -352,8 +359,14 @@ class TrueFalseGame {
             modal.classList.add('show');
         }, 10);
         
-        // Add close button event listener
+        // Add button event listeners
+        const playAgainBtn = document.getElementById('playAgainBtn');
         const closeBtn = document.getElementById('modalClose');
+        
+        if (playAgainBtn) {
+            playAgainBtn.addEventListener('click', () => this.playAgain());
+        }
+        
         if (closeBtn) {
             closeBtn.addEventListener('click', () => this.playAgain());
         }
