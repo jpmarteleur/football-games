@@ -1,3 +1,31 @@
+/* Season Disclaimer Banner */
+.season-disclaimer {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(251, 146, 60, 0.08) 100%);
+    border-bottom: 1px solid rgba(249, 115, 22, 0.2);
+    padding: 10px 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.disclaimer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.info-icon {
+    width: 18px;
+    height: 18px;
+    color: #fb923c;
+    flex-shrink: 0;
+}
+
 /* Welcome Container (Homepage specific) */
 .welcome-container {
     background: var(--card-background);
@@ -312,6 +340,20 @@
 
 /* Responsive design - Mobile: 2 cards per row */
 @media (max-width: 640px) {
+    .season-disclaimer {
+        padding: 8px 15px;
+    }
+    
+    .disclaimer-content {
+        font-size: 0.8rem;
+        gap: 8px;
+    }
+    
+    .info-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
     .welcome-container {
         padding: 20px 15px;
         margin: 15px auto;
