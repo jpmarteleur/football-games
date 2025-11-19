@@ -439,19 +439,19 @@ class ClubGuesserGame {
         if (input) input.disabled = true;
         if (submitBtn) submitBtn.disabled = true;
 
-        // Create overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'game-over-overlay';
-        overlay.setAttribute('role', 'dialog');
-        overlay.setAttribute('aria-labelledby', 'gameOverTitle');
-        overlay.setAttribute('aria-modal', 'true');
-        overlay.innerHTML = `
-            <div class="game-over-card">
-                <div class="game-over-icon" aria-hidden="true">${won ? '🎉' : '😔'}</div>
-                <h2 id="gameOverTitle" class="game-over-title ${won ? 'win' : 'lose'}">
+        // Create modal using shared modal.css structure
+        const modal = document.createElement('div');
+        modal.className = 'modal show';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-labelledby', 'modalTitle');
+        modal.setAttribute('aria-modal', 'true');
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-icon" aria-hidden="true">${won ? '🎉' : '😔'}</div>
+                <h2 id="modalTitle" class="modal-title ${won ? 'win' : 'lose'}">
                     ${won ? 'GOAL!' : 'GAME OVER'}
                 </h2>
-                <p class="game-over-message">
+                <p class="modal-message">
                     ${won 
                         ? `Congratulations! You guessed it in <strong>${this.attemptsUsed}</strong> ${this.attemptsUsed === 1 ? 'attempt' : 'attempts'}!`
                         : `Nice try! You used all ${this.MAX_ATTEMPTS} attempts.`
@@ -464,28 +464,26 @@ class ClubGuesserGame {
                         <div class="correct-answer-name">${this.escapeHtml(this.currentTeam.name)}</div>
                     </div>
                 </div>
-                <div class="game-over-buttons">
-                    <button class="restart-btn" id="restartBtn" aria-label="Play again">
-                        🔄 Play Again
-                    </button>
-                    <a href="../index.html" class="home-btn" aria-label="Go to home page">
-                        🏠 Home
-                    </a>
-                </div>
+                <button class="modal-button" id="restartBtn" aria-label="Play again">
+                    🔄 Play Again
+                </button>
+                <a href="../index.html" class="modal-button" style="display: inline-block; text-decoration: none; margin-top: 10px;" aria-label="Go to home page">
+                    🏠 Home
+                </a>
             </div>
         `;
 
-        document.body.appendChild(overlay);
+        document.body.appendChild(modal);
 
         // Add event listeners
-        const restartBtn = overlay.querySelector('#restartBtn');
+        const restartBtn = modal.querySelector('#restartBtn');
         if (restartBtn) {
             restartBtn.addEventListener('click', () => this.restartGame());
         }
 
         // Add click outside to close
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
                 this.restartGame();
             }
         });
@@ -496,7 +494,7 @@ class ClubGuesserGame {
         }
 
         // Trap focus within modal
-        overlay.addEventListener('keydown', (e) => {
+        modal.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.restartGame();
             }
@@ -505,10 +503,10 @@ class ClubGuesserGame {
 
     // Restart game
     restartGame() {
-        // Remove overlay
-        const overlay = document.querySelector('.game-over-overlay');
-        if (overlay) {
-            overlay.remove();
+        // Remove modal
+        const modal = document.querySelector('.modal');
+        if (modal) {
+            modal.remove();
         }
 
         // Remove validation error if present

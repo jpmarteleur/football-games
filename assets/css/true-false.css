@@ -191,21 +191,11 @@
     75% { transform: translateX(10px); }
 }
 
-/* Game Over Modal Content */
-.game-over-content {
-    text-align: center;
-}
-
-.game-over-content h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: var(--accent-primary);
-}
-
+/* Game Over Modal Content - Using shared modal.css */
 .streak-result {
     font-size: 3rem;
     font-weight: bold;
-    color: var(--accent-primary);
+    color: #fb923c;
     margin: 1.5rem 0;
 }
 
@@ -217,7 +207,7 @@
 
 .best-streak-badge {
     display: inline-block;
-    background: var(--accent-secondary);
+    background: #fb923c;
     color: white;
     padding: 0.5rem 1.5rem;
     border-radius: 20px;
@@ -230,25 +220,6 @@
     color: var(--text-primary);
     margin: 1.5rem 0;
     font-style: italic;
-}
-
-.play-again-btn {
-    margin-top: 2rem;
-    padding: 1rem 3rem;
-    font-size: 1.1rem;
-    background: var(--accent-primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.play-again-btn:hover {
-    background: var(--accent-primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive Design */

@@ -372,75 +372,7 @@
     font-weight: 900;
 }
 
-/* Game Over States */
-.game-over-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    animation: fadeIn 0.3s ease;
-}
-
-.game-over-card {
-    background: rgba(35, 28, 22, 0.6);
-    -webkit-backdrop-filter: blur(25px);
-    backdrop-filter: blur(25px);
-    padding: 35px;
-    border-radius: 20px;
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 24px 60px rgba(249, 115, 22, 0.35);
-    border: 1px solid rgba(249, 115, 22, 0.25);
-    animation: scaleIn 0.4s ease;
-    color: var(--text-primary);
-}
-
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.game-over-icon {
-    font-size: 4em;
-    margin-bottom: 15px;
-}
-
-.game-over-title {
-    font-size: 2em;
-    font-weight: 900;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.game-over-title.win {
-    color: #fb923c;
-}
-
-.game-over-title.lose {
-    color: #ff7a5c;
-}
-
-.game-over-message {
-    font-size: 1.1em;
-    color: var(--text-secondary);
-    margin-bottom: 20px;
-    font-weight: 600;
-    line-height: 1.6;
-}
+/* Game Over States - Using shared modal.css */
 
 .correct-answer {
     background: linear-gradient(135deg, rgba(249, 115, 22, 0.28) 0%, rgba(251, 146, 60, 0.2) 100%);
@@ -475,13 +407,6 @@
     font-size: 1.5em;
     color: var(--text-primary);
     font-weight: 900;
-}
-
-.game-over-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
 }
 
 .restart-btn {
@@ -598,18 +523,6 @@
         font-size: 1em;
     }
 
-    .game-over-card {
-        padding: 25px;
-    }
-
-    .game-over-title {
-        font-size: 1.5em;
-    }
-
-    .game-over-message {
-        font-size: 1em;
-    }
-
     .correct-answer-name {
         font-size: 1.2em;
     }
@@ -625,14 +538,5 @@
     .team-logo {
         width: 100px;
         height: 100px;
-    }
-
-    .game-over-buttons {
-        flex-direction: column;
-    }
-
-    .restart-btn,
-    .home-btn {
-        width: 100%;
     }
 }
